@@ -44,8 +44,8 @@ body {
 .profile-userpic img {
   float: none;
   margin: 0 auto;
-  width: 50%;
-  height: 50%;
+  width: 30%;
+  height: 30%;
   -webkit-border-radius: 50% !important;
   -moz-border-radius: 50% !important;
   border-radius: 50% !important;
@@ -115,6 +115,16 @@ body {
   background-color: #fafcfd;
   color: #5b9bd1;
 }
+#uploadBox{
+  position: relative;
+  top : -25px;
+  left: 80px;
+  color: grey;
+}
+#submitButton{
+  position: relative;
+  top: -28px;
+}
 
 .profile-usermenu ul li.active {
   border-bottom: none;
@@ -133,3 +143,35 @@ body {
   background: #fff;
   min-height: 460px;
 }
+
+.postDiv{
+  margin-bottom: 10px;
+  padding: 10px;
+  padding-bottom: 0px;
+  background-color: #fff;
+}
+
+textarea{
+  resize: none;
+  border-radius: 0px;
+  border: none;
+  outline: none;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #b46868;
+} /* the new scrollbar will have a flat appearance with the set background color */
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+} /* this will style the thumb, ignoring the track */
+
+::-webkit-scrollbar-button {
+  background-color: #7c2929;
+} /* optionally, you can style the top and the bottom buttons (left and right for horizontal bars) */
+
+::-webkit-scrollbar-corner {
+  background-color: black;
+}
+
+

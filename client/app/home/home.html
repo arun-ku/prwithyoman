@@ -67,7 +67,7 @@
 
 <div class="container">
   <div class="row profile">
-    <div class="col-md-3">
+    <div class="col-md-3" >
       <div class="profile-sidebar" style="margin-bottom: 10px;">
         <!-- SIDEBAR USERPIC -->
         <div class="profile-userpic">
@@ -98,17 +98,17 @@
                 <i class="glyphicon glyphicon-home"></i>
                 Overview </a>
             </li>
-            <li>
+            <li class="">
               <a href="#">
                 <i class="glyphicon glyphicon-user"></i>
                 Account Settings </a>
             </li>
-            <li>
-              <a href="#" target="_blank">
+            <li class="">
+              <a href="#">
                 <i class="glyphicon glyphicon-ok"></i>
                 Tasks </a>
             </li>
-            <li>
+            <li class="">
               <a href="#">
                 <i class="glyphicon glyphicon-flag"></i>
                 Help </a>
@@ -118,14 +118,59 @@
         <!-- END MENU -->
       </div>
     </div>
-    <div class="col-md-9">
-      <div class="profile-content">
-        Some user related content goes here...
+    <div class="col-md-7 col-md-offset-1">
+      <div class="postDiv">
+        <form>
+          <textarea rows="4" class="form-control" placeholder="Create A buzz..."></textarea><br/>
+
+          <div class="dropdown">
+            <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+              <span data-toggle="tooltip" title="Select a category for your Buzz">
+                Type
+              <span class="caret"></span>
+              </span>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a href="#">Buzz</a></li>
+              <li><a href="#">Lost And Found</a></li>
+            </ul>
+          </div>
+
+          <button class="btn btn-primary btn-sm pull-right" id="submitButton">Submit</button>
+
+          <label for="upload" id="uploadBox">
+            <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+            <input type="file" id="upload" style="display:none">
+          </label>
+        </form>
+
       </div>
+        <div class="profile-content">
+          Some user related content goes here... Maybe some posts or as we like to call it Buzzzzzzzz...
+        </div>
     </div>
   </div>
 </div>
 
+
+
+
+  <!-- Custom Scripting -->
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('.profile-usermenu .nav li').click(function(e) {
+
+      $('.profile-usermenu .nav li').removeClass('active');
+
+      var $this = $(this);
+      if (!$this.hasClass('active')) {
+        $this.addClass('active');
+      }
+      //e.preventDefault();
+    });
+    $('[data-toggle="tooltip"]').tooltip();
+  });
+</script>
 <br>
 <br>
 

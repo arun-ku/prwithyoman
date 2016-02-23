@@ -1,5 +1,6 @@
 'use strict';
 
+
 angular.module('prwithyomanApp')
   .controller('NavbarCtrl', function ($scope, $location, Auth) {
     $scope.menu = [{

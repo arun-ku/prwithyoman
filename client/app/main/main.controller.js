@@ -8,7 +8,7 @@ angular.module('prwithyomanApp')
 
 
     if($scope.isLoggedIn){
-      $location.path('/home');
+      $location.path('/home/user');
     }
 
     $scope.loginOauth = function(provider) {

@@ -36,16 +36,15 @@
         <button type="submit" class="btn btn-default">Submit</button>
       </form>-->
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-off"></span></a>
           <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
+            <li><a href="#">Account Settings</a></li>
+            <li><a href="#">Complaints</a></li>
+            <li><a href="#">Help</a></li>
+            <li><a href="" ng-click="logout()" data-toggle="tooltip" title="Logout from buzz only">logout</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="" ng-click="logout()">logout</a></li>
-            <li><a href="https://accounts.google.com/logout" target="_blank" ng-click="logout()">logout +</a></li>
+            <li><a href="https://accounts.google.com/logout" target="_blank" ng-click="logout()" data-toggle="tooltip" title="Logout from buzz and google">logout +</a></li>
           </ul>
         </li>
       </ul>
@@ -93,24 +92,24 @@
         <!-- SIDEBAR MENU -->
         <div class="profile-usermenu">
           <ul class="nav">
-            <li class="active">
-              <a href="#">
+            <li class="" id="on">
+              <a ui-sref="home.user">
                 <i class="glyphicon glyphicon-home"></i>
-                Overview </a>
+                Home </a>
             </li>
-            <li class="">
-              <a href="#">
+            <li class="" id="tw">
+              <a ui-sref=".settings">
                 <i class="glyphicon glyphicon-user"></i>
                 Account Settings </a>
             </li>
-            <li class="">
-              <a href="#">
+            <li class="" id="th">
+              <a ui-sref=".complaints">
                 <i class="glyphicon glyphicon-ok"></i>
-                Tasks </a>
+                Complaint </a>
             </li>
-            <li class="">
-              <a href="#">
-                <i class="glyphicon glyphicon-flag"></i>
+            <li class=""  id="fr">
+              <a ui-sref=".help">
+                <i class="glyphicon glyphicon-list-alt"></i>
                 Help </a>
             </li>
           </ul>
@@ -119,35 +118,7 @@
       </div>
     </div>
     <div class="col-md-7 col-md-offset-1">
-      <div class="postDiv">
-        <form>
-          <textarea rows="4" class="form-control" placeholder="Create A buzz..."></textarea><br/>
-
-          <div class="dropdown">
-            <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
-              <span data-toggle="tooltip" title="Select a category for your Buzz">
-                Type
-              <span class="caret"></span>
-              </span>
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-              <li><a href="#">Buzz</a></li>
-              <li><a href="#">Lost And Found</a></li>
-            </ul>
-          </div>
-
-          <button class="btn btn-primary btn-sm pull-right" id="submitButton">Submit</button>
-
-          <label for="upload" id="uploadBox">
-            <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
-            <input type="file" id="upload" style="display:none">
-          </label>
-        </form>
-
-      </div>
-        <div class="profile-content">
-          Some user related content goes here... Maybe some posts or as we like to call it Buzzzzzzzz...
-        </div>
+      <div data-ui-view=""></div>
     </div>
   </div>
 </div>

@@ -1,0 +1,33 @@
+.onePost{
+  padding: 20px;
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+.postHeaderSpan{
+  color : #2c3e50;
+  font-weight: bolder;
+}
+.postHeader{
+  overflow: hidden;
+}
+.postHeaderImage{
+  float: left;
+}
+.postHeaderDiv{
+  float: left;
+  margin-left: 1%;
+}
+.postContentDiv{
+  margin-top: 10px;
+}
+.postContentImage{
+  max-height: 300px;
+  max-width: 100%;
+}
+.postHeaderDateSpan{
+  font-weight: bolder;
+  font-size: 10px;
+  position: relative;
+  top: -4px;
+  color: #7f8c8d;
+}

@@ -1,0 +1,26 @@
+<div style="background-color: #fff; padding: 20px; text-align: center;  min-height: 800px;">
+  <h3>This is user complain page amigo</h3>
+
+  <br/>
+    <ul class="nav nav-tabs nav-justified" id="cmptabs">
+      <li class="active" id="cmpone"><a href="#">Filed complains</a></li>
+      <li class="" id="cmptwo"><a href="#">New Complains</a></li>
+    </ul>
+
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('#cmptabs li').click(function(e) {
+
+      $('#cmptabs li').removeClass('active');
+
+      var $this = $(this);
+      if (!$this.hasClass('active')) {
+        $this.addClass('active');
+      }
+    });
+    $('[data-toggle="tooltip"]').tooltip();
+    $('#th').addClass('active');
+  });
+</script>

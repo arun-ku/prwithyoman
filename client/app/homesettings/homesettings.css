@@ -1,0 +1,10 @@
+#sett{
+  -webkit-transition: -webkit-transform 2s; /* For Safari 3.1 to 6.0 */
+  transition: transform 2s;
+}
+
+#setti:hover #sett{
+  -ms-transform: rotate(360deg); /* IE 9 */
+  -webkit-transform: rotate(360deg); /* Safari */
+  transform: rotate(360deg);
+}

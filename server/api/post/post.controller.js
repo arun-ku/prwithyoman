@@ -8,7 +8,7 @@ exports.index = function(req, res) {
   Post.find(function (err, posts) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(posts);
-  });
+  }).sort({buzzDate : -1});
 };
 
 // Get a single post

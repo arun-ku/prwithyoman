@@ -1,12 +1,18 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+  Schema = mongoose.Schema;
 
 var PostSchema = new Schema({
   category : {type : String, default : 'BUZZ'},
-  something : String
-
+  user : {
+    id : String,
+    name : String,
+    imageUrl : String
+  },
+  imageUrl : String,
+  content : String,
+  buzzDate : String
 });
 
 module.exports = mongoose.model('Post', PostSchema);

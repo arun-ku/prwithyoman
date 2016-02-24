@@ -1,6 +1,6 @@
-<div class="postDiv">
+<div class="postDiv" ng-init="getPosts()">
   <form>
-    <textarea rows="4" class="form-control" placeholder="Create A buzz..."></textarea><br/>
+    <textarea rows="4" class="form-control" placeholder="Create A buzz..." data-ng-model="content"></textarea><br/>
 
     <div class="dropdown">
       <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
@@ -10,23 +10,38 @@
               </span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-        <li><a href="#">Buzz</a></li>
-        <li><a href="#">Lost And Found</a></li>
+        <li><a href="#" ng-click="setCategory('Buzz')">Buzz</a></li>
+        <li><a href="#" ng-click="setCategory('Lost And Found')">Lost And Found</a></li>
       </ul>
     </div>
 
-    <button class="btn btn-primary btn-sm pull-right" id="submitButton">Submit</button>
+
 
     <label for="upload" id="uploadBox" data-toggle="tooltip" title="Select An image. Make your Buzz cool">
       <span class="glyphicon glyphicon-paperclip" aria-hidden="true" ></span>
       <input type="file" id="upload" style="display:none">
     </label>
+
+    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()">Submit</button>
   </form>
 
 </div>
-<div class="profile-content">
-  Some user related content goes here... Maybe some posts or as we like to call it Buzzzzzzzz...
-</div>
+
+  <div ng-repeat="post in posts" class="onePost">
+    <div class="postHeader">
+      <img ng-src="{{post.user.imageUrl}}" class="postHeaderImage" alt=""/>
+      <div class="postHeaderDiv">
+        <span class="postHeaderSpan">{{post.user.name}} Buzzed in {{post.category}}</span><br/>
+        <span class="postHeaderDateSpan">{{post.buzzDate | date}}</span>
+      </div>
+    </div>
+    <div class="postContentDiv">
+      <span class="postContentSpan" ng-bind-html="post.content"></span><br/><br/>
+      <img class="postContentImage" ng-src="{{post.imageUrl}}" alt=""/>
+    </div>
+
+  </div>
+
 
 
 <script type="text/javascript">

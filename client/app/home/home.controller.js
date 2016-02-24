@@ -9,4 +9,5 @@ angular.module('prwithyomanApp')
     }
     $scope.user_name = Auth.getCurrentUser().name;
     $scope.user_img = Auth.getCurrentUser().google.image.url;
+    $scope.id = Auth.getCurrentUser()._id;
   }]);

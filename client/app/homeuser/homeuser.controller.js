@@ -2,8 +2,9 @@
 
 angular.module('prwithyomanApp')
   .controller('HomeuserCtrl', function ($scope, Auth, $http) {
+    $scope.post = {};
     $scope.setCategory = function(category){
-      $scope.category = category;
+      $scope.post.category = category;
     }
     $scope.getPosts = function(){
       $http.get("http://localhost:9000/api/posts").then(function(response){
@@ -15,21 +16,31 @@ angular.module('prwithyomanApp')
       var date = new Date(timestamp);
       return date;
     }
+
     $scope.submitPost = function(){
-      $http.post("http://localhost:9000/api/posts", {
-        category : $scope.category,
-        imageUrl : '',
-        content : $scope.content.replace(/\n/g, "<br/>"),
-        buzzDate : Date.now(),
-        user : {
-          id: Auth.getCurrentUser()._id,
-          name : Auth.getCurrentUser().name,
-          imageUrl : Auth.getCurrentUser().google.image.url
+      $scope.post.buzzDate = Date.now();
+      $scope.post.imageUrl = '';
+      $scope.post.user = '';
+      $scope.post.content = $scope.post.content.replace(/\n/g, "<br/>");
+      console.log($scope.post);
+      var fd = new FormData();
+      for(var key in $scope.post){
+        fd.append(key,$scope.post[key]);
+      }
+      $http.post("http://localhost:9000/api/posts", fd,{
+          transformRequest : angular.identity,
+          headers: { 'Content-Type' : undefined}
+        }).then(function(response){
+        if(response.result == 0){
+          console.log(response.err);
+        } else {
+          console.log(response);
         }
-      }).then(function(data, status){
-        $scope.content = '';
+        $scope.post.content = '';
         $scope.getPosts();
         /*window.location='#/';*/
-      });
+      }, function (err) {
+          console.log('errrrr',err);
+        });
     }
   });

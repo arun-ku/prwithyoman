@@ -15,7 +15,7 @@ var errorHandler = require('errorhandler');
 var path = require('path');
 var config = require('./environment');
 var passport = require('passport');
-
+//var multer = require('multer');
 module.exports = function(app) {
   var env = app.get('env');
 
@@ -25,12 +25,14 @@ module.exports = function(app) {
   app.use(compression());
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(bodyParser.json());
+
   app.use(methodOverride());
   app.use(cookieParser());
   app.use(passport.initialize());
   if ('production' === env) {
     app.use(favicon(path.join(config.root, 'public', 'favicon.ico')));
     app.use(express.static(path.join(config.root, 'public')));
+    app.use(express.static(path.join(config.root, 'upload')));
     app.set('appPath', path.join(config.root, 'public'));
     app.use(morgan('dev'));
   }
@@ -39,8 +41,10 @@ module.exports = function(app) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));
     app.use(express.static(path.join(config.root, 'client')));
+    app.use("/static-image",express.static(path.join(config.root, 'upload')));
     app.set('appPath', path.join(config.root, 'client'));
     app.use(morgan('dev'));
+    //app.use(multer({dest : '/static-image'}));
     app.use(errorHandler()); // Error handler - has to be last
   }
 };

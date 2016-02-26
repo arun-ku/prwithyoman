@@ -6,6 +6,7 @@ angular.module('prwithyomanApp')
       .state('home.complaints',{
         url : '/complains',
         templateUrl : 'app/homecomplain/homecomplain.html',
-        controller: 'HomecomplainCtrl'
+        controller: 'HomecomplainCtrl',
+        abstract : true
       })
   })

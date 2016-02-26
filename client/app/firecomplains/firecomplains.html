@@ -1,0 +1,49 @@
+<div class="col-md-2"></div>
+<div class="col-md-8" id="formBox">
+  <br/><br/><br/><br/><br/>
+  <form action="" enctype="multipart/form-data">
+    <div class="input-group">
+      <span class="input-group-addon">Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+      <input type="text" class="form-control" placeholder="Enter Title for your complain"/>
+    </div>
+    <br/>
+    <div class="input-group">
+      <span class="input-group-addon">Your <br/>Complain</span>
+      <textarea rows="4" class="form-control" placeholder="Enter your complain here"></textarea>
+    </div>
+    <br/>
+    <div class="pull-left">
+      <div class="dropdown" >
+        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+              <span data-toggle="tooltip" title="Select a category for your Complain">
+                Category
+              <span class="caret"></span>
+              </span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="#" ng-click="setCategory('Buzz')">Buzz</a></li>
+          <li><a href="#" ng-click="setCategory('Lost And Found')">Lost And Found</a></li>
+        </ul>
+      </div>
+
+
+
+      <label for="upload" id="uploadBox" data-toggle="tooltip" title="Upload Image If Any(Optional).">
+        <span class="glyphicon glyphicon-paperclip" aria-hidden="true" ></span>
+        <input type="file" id="upload" name="file" file-model="post.file" style="display:none">
+      </label>
+    </div>
+
+    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()" style="position: relative; top: 1px;">Submit</button>
+  </form>
+</div>
+<div class="col-md-2"></div>
+
+
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+    $('#cmptwo').addClass('active');
+  });
+</script>

@@ -8,16 +8,16 @@ exports.index = function(req, res) {
   Post.find(function (err, posts) {
     if(err) { return handleError(res, err); }
     return res.status(200).json(posts);
-  }).sort({buzzDate : -1});
+  }).sort({buzzDate : -1}).limit(10).skip(req.param.offset);
 };
 
 // Get a single post
 exports.show = function(req, res) {
-  Post.findById(req.params.id, function (err, post) {
+  Post.find(function (err, post) {
     if(err) { return handleError(res, err); }
     if(!post) { return res.status(404).send('Not Found'); }
     return res.json(post);
-  });
+  }).sort({buzzDate : -1}).limit(10).skip(req.params.id);
 };
 
 // Creates a new post in the DB.

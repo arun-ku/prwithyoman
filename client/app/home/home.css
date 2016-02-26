@@ -118,8 +118,11 @@ body {
 #uploadBox{
   position: relative;
   top : -25px;
-  left: 80px;
+  left: 125px;
   color: grey;
+}
+#uploadBox:hover{
+  cursor: pointer;
 }
 #submitButton{
   position: relative;

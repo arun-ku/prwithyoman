@@ -12,7 +12,7 @@ var up = multer({storage: multer.diskStorage({
     cb(null, path.join(process.cwd(), 'upload'));
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
+    cb(null, Date.now() + "" + Math.ceil(Math.random()*9999) + file.originalname);
   }
 })});
 

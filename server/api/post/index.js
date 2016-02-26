@@ -10,7 +10,10 @@ router.get('/', controller.index);
 router.get('/:id', controller.show);
 //router.post('/', controller.create);
  router.post('/', auth.isAuthenticated(),function(req,res,next){
-   if(req.file.mimetype == 'image/jpeg' || req.file.mimetype == 'image/jpg' ||req.file.mimetype == 'image/png'){
+   if(!req.file){
+     next();
+   }
+   else if(req.file.mimetype == 'image/jpeg' || req.file.mimetype == 'image/jpg' ||req.file.mimetype == 'image/png'){
      next();
    }else{
      res.send({ result: 0, err : 'file type wrong'});

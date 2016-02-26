@@ -31,10 +31,44 @@ angular.module('prwithyomanApp')
           transformRequest : angular.identity,
           headers: { 'Content-Type' : undefined}
         }).then(function(response){
-        if(response.result == 0){
-          console.log(response.err);
+        if(response.data.result == 0){
+          toastr["error"]("The file you sent is of invalid type. Please send an image only", "Invalid File",{
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "2000",
+            "hideDuration": "1000",
+            "timeOut": "8000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          });
+
+
         } else {
-          console.log(response);
+
+          toastr["success"]("Your post has been submitted successfully", "Post Submitted",{
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "2000",
+            "hideDuration": "1000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          });
+
         }
         $scope.post.content = '';
         $scope.getPosts();

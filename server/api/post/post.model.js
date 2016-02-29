@@ -13,7 +13,9 @@ var PostSchema = new Schema({
   imageUrl : String,
   content : String,
   buzzDate : String,
-  likes : []
+  likes : [],
+  dislikes : [],
+  neutral : []
 });
 
 module.exports = mongoose.model('Post', PostSchema);

@@ -4,12 +4,14 @@ angular.module('prwithyomanApp')
   .controller('HomeuserCtrl', function ($scope, Auth, $http, Reddit) {
     $scope.posts = new Reddit();
     $scope.post = {};
+    $scope.canvasShow = false;
     $scope.post.content = "";
     $scope.postShow = false;
     $scope.userImageUrl = Auth.getCurrentUser().google.image.url;
     $scope.userName = Auth.getCurrentUser().name;
+
     $scope.shouldShow = function(){
-      if($scope.post.content != "" || $scope.post.file){
+      if($scope.post.content != ""){
         $scope.postShow = true;
       }else{
         $scope.postShow = false;
@@ -95,6 +97,8 @@ angular.module('prwithyomanApp')
 
         }
         $scope.post.content = '';
+        $scope.post.category = 'Buzz';
+        $scope.postShow = false;
         /*$scope.getPosts();*/
         /*window.location='#/';*/
       }, function (err) {

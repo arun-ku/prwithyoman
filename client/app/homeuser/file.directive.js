@@ -10,6 +10,7 @@ angular.module('prwithyomanApp')
         var modelSetter = model.assign;
 
         element.bind('change', function(e){
+          scope.canvasShow = true;
           var ctx = document.getElementById('canvas').getContext('2d');
           var url = URL.createObjectURL(e.target.files[0]);
           var img = new Image();

@@ -20,11 +20,20 @@ exports.show = function(req, res) {
   }).sort({buzzDate : -1}).limit(10).skip(req.params.id);
 };
 
+// Get posts with catagory
+exports.showWithCategory = function(req, res) {
+  Post.find({category : req.params.category},function (err, post) {
+    if(err) { return handleError(res, err); }
+    if(!post) { return res.status(404).send('Not Found'); }
+    return res.json(post);
+  }).sort({buzzDate : -1}).limit(10).skip(req.params.id);
+};
+
 // Creates a new post in the DB.
 exports.create = function(req, res) {
   Post.create(req.body, function(err, post) {
     if(err) { return handleError(res, err); }
-    return res.status(201).json(post);
+    return res.status(201).json(req.body);
   });
 };
 

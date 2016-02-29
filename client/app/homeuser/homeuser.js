@@ -8,4 +8,9 @@ angular.module('prwithyomanApp')
         templateUrl : 'app/homeuser/homeuser.html',
         controller: 'HomeuserCtrl'
       })
+      .state('home.lostandfound',{
+        url : '/LostAndFound',
+        templateUrl : 'app/homeuser/lostandfound.html',
+        controller: 'LostAndFoundCtrl'
+      })
   })

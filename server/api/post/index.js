@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
+router.get('/:id/:category', controller.showWithCategory);
 //router.post('/', controller.create);
  router.post('/', auth.isAuthenticated(),function(req,res,next){
    if(!req.file){

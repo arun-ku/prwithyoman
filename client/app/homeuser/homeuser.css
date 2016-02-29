@@ -50,3 +50,9 @@ pre{
   border: none;
   padding: 0px;
 }
+.blurred{
+  text-align: center;
+  color: rgba(0,0,0,.2);
+  position: relative;
+  top: -100px;
+}

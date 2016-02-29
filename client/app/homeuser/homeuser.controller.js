@@ -3,9 +3,25 @@
 angular.module('prwithyomanApp')
   .controller('HomeuserCtrl', function ($scope, Auth, $http, Reddit) {
     $scope.posts = new Reddit();
-    $scope.post ={};
-    console.log($scope.post)
-    $scope.post.category = 'Type';
+    $scope.post = {};
+    $scope.post.content = "";
+    $scope.postShow = false;
+    $scope.userImageUrl = Auth.getCurrentUser().google.image.url;
+    $scope.userName = Auth.getCurrentUser().name;
+    $scope.shouldShow = function(){
+      if($scope.post.content != "" || $scope.post.file){
+        $scope.postShow = true;
+      }else{
+        $scope.postShow = false;
+      }
+
+    }
+
+
+    $scope.billuCaller = function(){
+      return new Reddit().billu();
+    }
+    $scope.post.category = 'Buzz';
     $scope.setCategory = function(category){
       $scope.post.category = category;
     }
@@ -21,6 +37,10 @@ angular.module('prwithyomanApp')
     }*/
 
     $scope.submitPost = function(){
+      $scope.postShow = false;
+      if($scope.post.category == 'Type'){
+        $scope.post.category = 'Buzz';
+      }
       $scope.post.buzzDate = Date.now();
       $scope.post.imageUrl = '';
       $scope.post.user = '';
@@ -54,6 +74,8 @@ angular.module('prwithyomanApp')
 
         } else {
 
+          $scope.posts.items.unshift(response.data);
+          $scope.posts.updateOffsetByOne();
           toastr["success"]("Your post has been submitted successfully", "Post Submitted",{
             "closeButton": true,
             "debug": false,
@@ -78,5 +100,20 @@ angular.module('prwithyomanApp')
       }, function (err) {
           console.log('errrrr',err);
         });
+    }
+  })
+  .controller('LostAndFoundCtrl', function ($scope, Auth, $http, Reddit) {
+    $scope.posts = new Reddit();
+    $scope.post = {};
+    $scope.post.content = "";
+    $scope.postShow = false;
+    $scope.userImageUrl = Auth.getCurrentUser().google.image.url;
+    $scope.userName = Auth.getCurrentUser().name;
+    $scope.shouldShow = function(){
+      if($scope.post.content != "" || $scope.post.file){
+        $scope.postShow = true;
+      }else{
+        $scope.postShow = false;
+      }
     }
   });

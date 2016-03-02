@@ -56,3 +56,89 @@ pre{
   position: relative;
   top: -100px;
 }
+.ribbon-wrapper1{
+  padding : 6px 0px;
+  background: red; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(#3498db, #2980b9); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(#3498db, #2980b9); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(#3498db, #2980b9); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(#3498db, #2980b9); /* Standard syntax */
+  color: #fff;
+  font-weight: bolder;
+  width : 30%;
+  text-align: center;
+  float: right;
+  position: relative;
+  left : 25px;
+  overflow: hidden;
+}
+.ribbon-wrapper2{
+  padding : 6px 0px;
+  background: red; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient( #f39c12, #e67e22); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient( #f39c12, #e67e22); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient( #f39c12, #e67e22); /* For Firefox 3.6 to 15 */
+  background: linear-gradient( #f39c12, #e67e22); /* Standard syntax */
+  color: #fff;
+  font-weight: bolder;
+  width : 30%;
+  text-align: center;
+  float: right;
+  position: relative;
+  left : 25px;
+  overflow: hidden;
+  z-index: 1;
+}
+#preview .tri-1{
+  border-left-color: #ffffcc;
+}
+.tri-1{
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  border-left: 20px solid #fff;
+  border-right : none;
+  height: 0px;
+  width : 0px;
+  float: left;
+  position: absolute;
+  top : -4px;
+  left: 0px;
+}
+.tri-2{
+  border-bottom: 20px solid transparent;
+  border-top: 20px solid transparent;
+  border-right: 20px solid orange;
+  border-left : none;
+  height: 0px;
+  width : 0px;
+  float: right;
+  position: absolute;
+  z-index: 1;
+}
+@media screen and (max-width: 510px){
+  html{
+    overflow-x : hidden ;
+  }
+  .ribbon-wrapper2{
+    width : 37%;
+    font-weight: bold;
+  }
+  .tri-1{
+    left: -2px;
+  }
+}
+
+.opinionButton{
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin-left: 4px;
+}
+.opinionButton img{
+  height: 25px;
+  width: 25px;
+}
+.opinionButton img:active{
+  opacity: .7;
+}
+

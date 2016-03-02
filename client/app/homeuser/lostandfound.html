@@ -1,9 +1,10 @@
 <div infinite-scroll='posts.nextPageCategory()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.5' infinite-scroll-disabled="isData()">
   <div ng-repeat="post in posts.items" class="onePost">
+    <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']"><div class="tri-1"></div><span>&nbsp &nbsp{{post.category}}</span></div>
     <div class="postHeader">
       <img ng-src="{{post.user.imageUrl}}" class="postHeaderImage" alt=""/>
       <div class="postHeaderDiv">
-        <span class="postHeaderSpan">{{post.user.name}} Buzzed in {{post.category}}</span><br/>
+        <span class="postHeaderSpan">{{post.user.name}} created a new buzz</span><br/>
         <span class="postHeaderDateSpan" am-time-ago="post.buzzDate"></span>
       </div>
     </div>

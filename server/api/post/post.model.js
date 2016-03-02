@@ -13,9 +13,16 @@ var PostSchema = new Schema({
   imageUrl : String,
   content : String,
   buzzDate : String,
-  likes : [],
-  dislikes : [],
-  neutral : []
+  opinionCount : {
+    likes : {type : Number, default: 0},
+    dislikes : {type : Number, default: 0},
+    neutral : {type : Number, default: 0}
+  },
+  opinion : [{
+    name : String,
+    imageUrl : String,
+    category : String
+  }]
 });
 
 module.exports = mongoose.model('Post', PostSchema);

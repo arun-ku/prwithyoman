@@ -10,11 +10,30 @@ angular.module('prwithyomanApp')
     $scope.userImageUrl = Auth.getCurrentUser().google.image.url;
     $scope.userName = Auth.getCurrentUser().name;
 
+
     $scope.shouldShow = function(){
+      $scope.showContent = $scope.post.content;
+      var urlPattern = /(http:\/\/|https:\/\/)?(www\.)?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      var urlPattern2 = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      $scope.showContent = $scope.showContent.replace(/\n/g, "<br/>");
+
+    if($scope.showContent.indexOf('https://') === -1 || $scope.showContent.indexOf('http://') === -1) {
+      $scope.showContent = $scope.showContent.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
+    } else {
+      $scope.showContent = $scope.showContent.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
+    }
+
+      //if($scope.showContent.indexOf('http://')!= -1) {
+      //  $scope.showContent = $scope.showContent.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
+      //}else if($scope.showContent.indexOf('https://') == -1) {
+      //  $scope.showContent = $scope.showContent.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
+      //}
       if($scope.post.content != ""){
         $scope.postShow = true;
       }else{
         $scope.postShow = false;
+
+        $scope.frm.$setPristine();
       }
 
     }
@@ -23,7 +42,7 @@ angular.module('prwithyomanApp')
     $scope.billuCaller = function(){
       return new Reddit().billu();
     }
-    $scope.post.category = 'Buzz';
+    $scope.post.category = 'Activity';
     $scope.setCategory = function(category){
       $scope.post.category = category;
     }
@@ -39,14 +58,21 @@ angular.module('prwithyomanApp')
     }*/
 
     $scope.submitPost = function(){
+      $scope.frm.$setPristine();
       $scope.postShow = false;
       if($scope.post.category == 'Type'){
-        $scope.post.category = 'Buzz';
+        $scope.post.category = 'Activity';
       }
       $scope.post.buzzDate = Date.now();
       $scope.post.imageUrl = '';
       $scope.post.user = '';
+      var urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
       $scope.post.content = $scope.post.content.replace(/\n/g, "<br/>");
+      if($scope.post.content.indexOf('https://') === -1 || $scope.post.content.indexOf('http://') === -1) {
+        $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
+      } else {
+        $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
+      }
       var fd = new FormData();
       for(var key in $scope.post){
         fd.append(key,$scope.post[key]);
@@ -97,8 +123,10 @@ angular.module('prwithyomanApp')
 
         }
         $scope.post.content = '';
-        $scope.post.category = 'Buzz';
+        $scope.post.category = 'Activity';
         $scope.postShow = false;
+        $scope.canvasShow = false;
+        $scope.post.file = {};
         /*$scope.getPosts();*/
         /*window.location='#/';*/
       }, function (err) {

@@ -7,7 +7,6 @@ angular.module('prwithyomanApp', [
   'btford.socket-io',
   'ui.router',
   'angularMoment',
-  'ngSanitize',
   'hm.readmore',
   'infinite-scroll'
 ])

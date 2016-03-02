@@ -19,6 +19,7 @@ var PostSchema = new Schema({
     neutral : {type : Number, default: 0}
   },
   opinion : [{
+    userId : String,
     name : String,
     imageUrl : String,
     category : String

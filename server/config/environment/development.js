@@ -5,7 +5,7 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/prwithyoman-dev'
+    uri: process.env.MONGOURL || 'mongodb://localhost/prwithyoman-dev'
   },
   seedDB: false
 };

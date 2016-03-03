@@ -83,7 +83,7 @@ angular.module('prwithyomanApp')
       for(var key in $scope.post){
         fd.append(key,$scope.post[key]);
       }
-      $http.post("http://localhost:9000/api/posts", fd,{
+      $http.post("/api/posts", fd,{
           transformRequest : angular.identity,
           headers: { 'Content-Type' : undefined}
         }).then(function(response){

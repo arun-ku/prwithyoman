@@ -1,4 +1,5 @@
-
+var path = require('path');
+var _ = require('lodash');
 
 // All configurations will extend these options
 // ============================================

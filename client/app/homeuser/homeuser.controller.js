@@ -38,9 +38,15 @@ angular.module('prwithyomanApp')
 
     }
 
-    $scope.updateOpinion = function(type, postId){
+    $scope.updateOpinion = function(type, postId, i){
       PostService.update({postId : postId, opinion : type},function(data){
-        console.log(data);
+        if(data.resCode != 0){
+          $scope.posts.items[i].count[type+'s']+=1;
+          if(data.type!=''){
+            $scope.posts.items[i].count[data.type+'s']-=1;
+          }
+        }
+
       });
     };
 

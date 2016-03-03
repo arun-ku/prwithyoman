@@ -45,7 +45,7 @@ exports.create = function (req, res) {
     if (err) {
       return handleError(res, err);
     }
-    return res.status(201).json(req.body);
+    return res.status(201).json(post);
   });
 };
 
@@ -80,6 +80,7 @@ exports.updateOpinion = function (req, res) {
       return handleError(res, err);
     }
     if (!post) {
+      console.log('nomatch');
       var updateObj = {};
       var user = req.user;
       var pushObj ={
@@ -89,19 +90,19 @@ exports.updateOpinion = function (req, res) {
         category : req.params.opinion
       };
       updateObj['count.'+req.params.opinion+'s'] = 1;
-      console.log(updateObj, JSON.stringify(updateObj, null, 3));
-      Post.update({_id: req.params.postId}, {$push : {opinion : pushObj}, $set: updateObj}, function(err, count) {
-        console.log(err, count);
+      Post.update({_id: req.params.postId}, {$push : {opinion : pushObj}, $inc: updateObj}, function(err, count) {
+        console.log( count);
       });
-      return res.send({ob1 :pushObj,ob2 : updateObj});
+      return res.send(pushObj);
     }
     if(req.params.opinion == post.opinion[0].category){
-      return res.send({message : "everything looks good major. no need to update"});
+      return res.send({resCode : 0, message : "everything looks good major. no need to update"});
     }
     var _obj = {};
+    var previousType = '';
     switch (req.params.opinion) {
       case 'like' :
-        console.log(post.opinion[0].category);
+        previousType = post.opinion[0].category;
         _obj["count.likes"] = post.count.likes + 1;
         if (post.opinion[0].category == 'dislike') {
             _obj["count.dislikes"] = post.count.dislikes - 1;
@@ -113,7 +114,7 @@ exports.updateOpinion = function (req, res) {
         break;
 
       case 'dislike' :
-        console.log(post.opinion[0].category);
+        previousType = post.opinion[0].category;
         _obj["count.dislikes"] = post.count.dislikes + 1;
         if (post.opinion[0].category == 'like') {
           _obj["count.likes"] = post.count.likes - 1;
@@ -124,7 +125,7 @@ exports.updateOpinion = function (req, res) {
         break;
 
       case 'neutral' :
-        console.log(post.opinion[0].category);
+        previousType = post.opinion[0].category;
         _obj["count.neutrals"] = post.count.neutrals + 1;
         if (post.opinion[0].category == 'dislike') {
           _obj["count.dislikes"] = post.count.dislikes - 1;
@@ -141,7 +142,7 @@ exports.updateOpinion = function (req, res) {
         console.log(err);
       }
     });
-    res.send('hola');
+    res.send({type : previousType});
   });
 };
 

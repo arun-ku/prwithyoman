@@ -4,12 +4,17 @@ angular.module('prwithyomanApp')
   .controller('MainCtrl', function ($scope, $http, $window, Auth, $state, $location) {
 
 
-    $scope.isLoggedIn = Auth.isLoggedIn();
+
+      $scope.checkState = function(){
+        $scope.isLoggedIn = Auth.isLoggedIn();
+        if($scope.isLoggedIn){
+          $location.path('/home/user');
+        }
+      }
 
 
-    if($scope.isLoggedIn){
-      $location.path('/home/user');
-    }
+
+
 
     $scope.loginOauth = function(provider) {
       $window.location.href = '/auth/' + provider;

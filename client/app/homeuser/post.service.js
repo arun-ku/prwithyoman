@@ -18,7 +18,7 @@ angular.module('prwithyomanApp')
       if (this.busy) return;
       this.busy = true;
       this.scrol=true;
-      var url = "http://localhost:9000/api/posts/"+this.params.offset;
+      var url = "/api/posts/"+this.params.offset;
       $http.get(url).then(function (data) {
         for(var i=0; i< data.data.length;i++)
         this.items.push(data.data[i]);
@@ -35,7 +35,7 @@ angular.module('prwithyomanApp')
       if (this.busy) return;
       this.busy = true;
       this.scrol=true;
-      var url = "http://localhost:9000/api/posts/"+this.params.offset+'/Lost And Found';
+      var url = "/api/posts/"+this.params.offset+'/Lost And Found';
       $http.get(url).then(function (data) {
         for(var i=0; i< data.data.length;i++)
           this.items.push(data.data[i]);

@@ -7,4 +7,6 @@ dist
 /server/config/local.env.js
 npm-debug.log
 uploads/
-upload/
+upload/*.png
+upload/*.jpeg
+upload/*.jpg

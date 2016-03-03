@@ -37,6 +37,16 @@ module.exports = function(app) {
     app.use(morgan('dev'));
   }
 
+  if(env === "heroku") {
+    app.use(express.static(path.join(config.root, '.tmp')));
+    app.use(express.static(path.join(config.root, 'client')));
+    app.use("/static-image",express.static(path.join(config.root, 'upload')));
+    app.set('appPath', path.join(config.root, 'client'));
+    app.use(morgan('dev'));
+    //app.use(multer({dest : '/static-image'}));
+    app.use(errorHandler()); // Error handler - has to be last
+  }
+
   if ('development' === env || 'test' === env) {
     app.use(require('connect-livereload')());
     app.use(express.static(path.join(config.root, '.tmp')));

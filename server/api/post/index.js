@@ -30,6 +30,7 @@ router.get('/:id/:category', controller.showWithCategory);
     req.body.imageUrl = '/static-image/'+req.file.filename;
    next();
  }, controller.create);
+router.put('/updateOpinion/:postId/:opinion', auth.isAuthenticated(), controller.updateOpinion);
 router.put('/:id', controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);

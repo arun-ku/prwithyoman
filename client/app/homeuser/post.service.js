@@ -59,4 +59,15 @@ angular.module('prwithyomanApp')
     }
 
   return Reddit;
-});
+})
+  .factory('PostService',['$resource',function($resource){
+    return $resource('/api/posts/updateOpinion/:postId/:opinion',{
+        postId : '@postId',
+        opinion : '@opinion'
+      },
+      {
+        update : {
+          method : 'PUT'
+        }
+      });
+  }]);

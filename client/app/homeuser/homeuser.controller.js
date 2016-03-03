@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('prwithyomanApp')
-  .controller('HomeuserCtrl', function ($scope, Auth, $http, Reddit) {
+  .controller('HomeuserCtrl', function ($scope, Auth, $http, Reddit, PostService) {
     $scope.posts = new Reddit();
     $scope.post = {};
     $scope.canvasShow = false;
@@ -32,11 +32,17 @@ angular.module('prwithyomanApp')
         $scope.postShow = true;
       }else{
         $scope.postShow = false;
-
-        $scope.frm.$setPristine();
+        if(!$scope.canvasShow)
+          $scope.frm.$setPristine();
       }
 
     }
+
+    $scope.updateOpinion = function(type, postId){
+      PostService.update({postId : postId, opinion : type},function(data){
+        console.log(data);
+      });
+    };
 
 
     $scope.billuCaller = function(){

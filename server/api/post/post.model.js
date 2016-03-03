@@ -13,10 +13,10 @@ var PostSchema = new Schema({
   imageUrl : String,
   content : String,
   buzzDate : String,
-  opinionCount : {
+  count : {
     likes : {type : Number, default: 0},
     dislikes : {type : Number, default: 0},
-    neutral : {type : Number, default: 0}
+    neutrals : {type : Number, default: 0}
   },
   opinion : [{
     userId : String,

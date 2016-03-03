@@ -20,7 +20,7 @@
 
         <label for="upload" id="uploadBox" data-toggle="tooltip" title="Select An image. Make your Buzz cool" data-ng-model="abc" ng-change="shouldShow()">
           <span class="glyphicon glyphicon-camera" aria-hidden="true" ></span>
-          <input type="file" id="upload" name="file" file-model="post.file" style="display:none" valid-file="file" ng-model="file"/>
+          <input type="file" id="upload" name="file" file-model="post.file" style="display:none" valid-file="file" ng-model="file" accept="image/*"/>
         </label>
 
         <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton" ng-disabled="!frm.$dirty" value="Submit">
@@ -33,7 +33,7 @@
         <img ng-src="{{userImageUrl}}" class="postHeaderImage" alt=""/>
         <div class="postHeaderDiv">
           <span class="postHeaderSpan">{{userName}} created a new Buzz</span><br/>
-          <span class="postHeaderDateSpan" am-time-ago="post.buzzDate"></span>
+          <span class="postHeaderDateSpan">a few seconds ago</span>
         </div>
       </div>
       <div class="postContentDiv">
@@ -47,14 +47,13 @@
                hm-dots-class="dots"
                hm-link-class="links">
           </div>
-        </div><br/><br/>
-        <img class="postContentImage" ng-src="" alt=""/>
-        <canvas ng-show="canvasShow" width="500" height="500" id="canvas"/>
+        </div>
+        <canvas ng-show="frm.file.$dirty" width="500" height="500" id="canvas" style="margin-top: 10px;"/>
       </div>
 
     </div>
 
-    <div infinite-scroll='posts.nextPage()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.5' infinite-scroll-disabled="isData()">
+    <div infinite-scroll='posts.nextPage()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.8' infinite-scroll-disabled="isData()">
       <div ng-repeat="post in posts.items" class="onePost">
           <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']"><div class="tri-1"></div><span>&nbsp &nbsp{{post.category}}</span></div>
         <div class="postHeader">
@@ -75,13 +74,13 @@
                  hm-dots-class="dots"
                  hm-link-class="links">
             </div>
-          </div><br/>
-          <img class="postContentImage" ng-src="{{post.imageUrl}}" alt=""/>
+          </div>
+          <img class="postContentImage" ng-src="{{post.imageUrl}}" alt="" style="margin-top: 10px;"/>
         </div>
         <br/>
-        <button class="opinionButton"><img src="../assets/images/like1.png" alt=""/></button><span>27 likes</span>
-        <button class="opinionButton"><img src="../assets/images/neutral1.png" alt=""/></button><span>3 Neutrals</span>
-        <button class="opinionButton"><img src="../assets/images/dislike2.png" alt=""/></button><span>12 Dislikes</span>
+        <button class="opinionButton" ng-click="updateOpinion('like', this.post._id)"><img src="../assets/images/like1.png" alt=""/></button><span class="badge">{{post.count.likes}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id)"><img src="../assets/images/neutral1.png" alt=""/></button><span class="badge">{{post.count.neutrals}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id)"><img src="../assets/images/dislike2.png" alt=""/></button><span class="badge">{{post.count.dislikes}}</span>
 
       </div>
 

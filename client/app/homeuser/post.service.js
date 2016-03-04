@@ -39,7 +39,6 @@ angular.module('prwithyomanApp')
       $http.get(url).then(function (data) {
         for(var i=0; i< data.data.length;i++)
           this.items.push(data.data[i]);
-        console.log(this.params.offset);
         this.params.offset += data.data.length;
         this.busy = false;
         if(data.data.length <=0){

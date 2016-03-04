@@ -8,9 +8,14 @@ angular.module('prwithyomanApp', [
   'ui.router',
   'angularMoment',
   'hm.readmore',
-  'infinite-scroll'
+  'infinite-scroll',
+  'ngFileUpload',
+  'cloudinary'
 ])
-  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, cloudinaryProvider) {
+    cloudinaryProvider
+      .set("cloud_name", "buzzcloud")
+      .set("upload_preset", "xb8f9g0w");
     $urlRouterProvider
       .otherwise('/');
 
@@ -23,7 +28,9 @@ angular.module('prwithyomanApp', [
       // Add authorization token to headers
       request: function (config) {
         config.headers = config.headers || {};
-        if ($cookieStore.get('token')) {
+        var hasOverride = config.data && config.data.bypassAuth === "pass";
+        console.log(config, hasOverride);
+        if ($cookieStore.get('token') && !hasOverride) {
           config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
         }
         return config;

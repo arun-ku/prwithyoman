@@ -1,15 +1,46 @@
 'use strict';
 
 angular.module('prwithyomanApp')
-  .controller('HomeuserCtrl', function ($scope, Auth, $http, Reddit, PostService) {
+  .controller('HomeuserCtrl',['$scope', 'Auth', '$http', 'Reddit', 'PostService', 'Upload', 'cloudinary', function ($scope, Auth, $http, Reddit, PostService, $upload, cloudinary) {
     $scope.posts = new Reddit();
     $scope.post = {};
     $scope.canvasShow = false;
     $scope.post.content = "";
     $scope.postShow = false;
-    $scope.userImageUrl = Auth.getCurrentUser().google.image.url;
-    $scope.userName = Auth.getCurrentUser().name;
+    $scope.buttonShow = true;
+    Auth.getCurrentUser().$promise.then(function(user){
+      console.log(">>>", user);
+      $scope.userImageUrl = user.google.image.url;
+      $scope.userName = user.name;
+    });
 
+
+    $scope.uploadFiles = function(files){
+      $scope.files1 = files;
+      if (!$scope.files1) return;
+      angular.forEach(files, function(file){
+        if (file && !file.$error) {
+          file.upload = $upload.upload({
+            url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
+            data: {
+              upload_preset: cloudinary.config().upload_preset,
+              tags: 'myphotoalbum',
+              context: 'photo=' + new Date(),
+              file: file,
+              bypassAuth : 'pass'
+            }
+          }).progress(function (e) {
+            file.progress = Math.round((e.loaded * 100.0) / e.total);
+            file.status = "Uploading... " + file.progress + "%";
+          }).success(function (data) {
+            file.result = data;
+            $scope.buttonShow = false;
+          }).error(function (data, status, headers, config) {
+            file.result = data;
+          });
+        }
+      });
+    };
 
     $scope.shouldShow = function(){
       $scope.showContent = $scope.post.content;
@@ -71,12 +102,18 @@ angular.module('prwithyomanApp')
 
     $scope.submitPost = function(){
       $scope.frm.$setPristine();
+      $scope.buttonShow = true;
       $scope.postShow = false;
       if($scope.post.category == 'Type'){
         $scope.post.category = 'Activity';
       }
       $scope.post.buzzDate = Date.now();
-      $scope.post.imageUrl = '';
+      if($scope.files1){
+        $scope.post.imageUrl = $scope.files1[0].result.secure_url;
+      }else{
+        $scope.post.imageUrl ='';
+      }
+
       $scope.post.user = '';
       var urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
       $scope.post.content = $scope.post.content.replace(/\n/g, "<br/>");
@@ -145,7 +182,7 @@ angular.module('prwithyomanApp')
           console.log('errrrr',err);
         });
     }
-  })
+  }])
   .controller('LostAndFoundCtrl', function ($scope, Auth, $http, Reddit) {
     $scope.posts = new Reddit();
     $scope.post = {};

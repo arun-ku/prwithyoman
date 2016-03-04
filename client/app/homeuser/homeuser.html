@@ -23,11 +23,18 @@
           <input type="file" id="upload" name="file" file-model="post.file" style="display:none" valid-file="file" ng-model="file" accept="image/*"/>
         </label>
 
-        <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton" ng-disabled="!frm.$dirty" value="Submit">
+        <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton" ng-disabled="buttonShow && !frm.$dirty" value="Submit">
+        <br/>
+        <div class="form_controls">
+        <div class="upload_button_holder">
+          <div href="#" class="upload_button" style="background-color : red;" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true" >Upload</div>
+        </div>
+
+      </div>
       </form>
 
     </div>
-    <div ng-show="frm.$dirty" class="onePost" style="position: relative; top: -8px; background-color: #ffffcc;" id="preview">
+    <div ng-hide="buttonShow && !frm.$dirty" class="onePost" style="position: relative; top: -8px; background-color: #ffffcc;" id="preview">
       <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']"><div class="tri-1"></div><span>{{post.category}}</span></div>
       <div class="postHeader">
         <img ng-src="{{userImageUrl}}" class="postHeaderImage" alt=""/>
@@ -48,7 +55,10 @@
                hm-link-class="links">
           </div>
         </div>
-        <canvas ng-show="frm.file.$dirty" width="500" height="500" id="canvas" style="margin-top: 10px;"/>
+
+        <div class="file" ng-repeat="file in files1">
+                <img class="postContentImage" ngf-src="file.result.url || file">
+        </div>
       </div>
 
     </div>

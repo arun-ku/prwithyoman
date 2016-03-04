@@ -4,13 +4,11 @@ angular.module('prwithyomanApp')
   .controller('MainCtrl', function ($scope, $http, $window, Auth, $state, $location) {
 
 
+var currentUser = Auth.getCurrentUser();
 
-      $scope.checkState = function(){
-        $scope.isLoggedIn = Auth.isLoggedIn();
-        if($scope.isLoggedIn){
-          $location.path('/home/user');
-        }
-      }
+    currentUser.$promise && currentUser.$promise.then(function (user) {
+      $location.path('/home/user');
+    });
 
 
 

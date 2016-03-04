@@ -19,6 +19,7 @@
 }
 .postContentDiv{
   margin-top: 10px;
+  word-break: break-all;
 }
 .postContentImage{
   max-height: 300px;
@@ -54,7 +55,6 @@ pre{
   text-align: center;
   color: rgba(0,0,0,.2);
   position: relative;
-  top: -100px;
 }
 .ribbon-wrapper1{
   padding : 6px 0px;
@@ -115,16 +115,38 @@ pre{
   position: absolute;
   z-index: 1;
 }
-@media screen and (max-width: 510px){
+@media screen and (max-width: 600px){
   html{
     overflow-x : hidden ;
   }
-  .ribbon-wrapper2{
+  .ribbon-wrapper2, .ribbon-wrapper1{
     width : 37%;
     font-weight: bold;
   }
   .tri-1{
     left: -2px;
+  }
+  .navbar{
+    width: 100%;
+  }
+}
+@media screen and (max-width: 450px){
+  .ribbon-wrapper2, .ribbon-wrapper1{
+    width : 50%;
+    font-size: 9px;
+    word-spacing: 1px;
+  }
+
+  .tri-1{
+    top : -8px;
+  }
+  .postHeaderSpan{
+    font-size: 10px;
+    line-height: 10px;
+    width: 100%;
+  }
+  .navbar{
+    width: 100%;
   }
 }
 

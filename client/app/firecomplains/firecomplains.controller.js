@@ -47,10 +47,10 @@ angular.module('prwithyomanApp')
       });
     };*/
 
-    $scope.shouldShow = function(){
+   /* $scope.shouldShow = function(){
       $scope.showContent = $scope.comment.content;
       if($scope.comment.content == ""){
         $scope.frm.$setPristine();
       }
-    }
+    }*/
   }]);

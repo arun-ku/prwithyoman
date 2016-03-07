@@ -29,7 +29,6 @@ angular.module('prwithyomanApp', [
       request: function (config) {
         config.headers = config.headers || {};
         var hasOverride = config.data && config.data.bypassAuth === "pass";
-        console.log(config, hasOverride);
         if ($cookieStore.get('token') && !hasOverride) {
           config.headers.Authorization = 'Bearer ' + $cookieStore.get('token');
         }

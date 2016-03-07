@@ -8,7 +8,6 @@ angular.module('prwithyomanApp')
       $location.path('/');
     }
     Auth.getCurrentUser().$promise.then(function(user){
-      console.log(">>>", user);
       $scope.userImage = user.google.image.url;
       $scope.userName = user.name;
     });

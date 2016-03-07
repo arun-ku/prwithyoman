@@ -8,8 +8,8 @@ angular.module('prwithyomanApp')
     $scope.post.content = "";
     $scope.postShow = false;
     $scope.buttonShow = true;
+    $scope.buttonShow2 = false;
     Auth.getCurrentUser().$promise.then(function(user){
-      console.log(">>>", user);
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;
     });
@@ -17,6 +17,7 @@ angular.module('prwithyomanApp')
 
     $scope.uploadFiles = function(files){
       $scope.files1 = files;
+      $scope.buttonShow2 = true;
       if (!$scope.files1) return;
       angular.forEach(files, function(file){
         if (file && !file.$error) {
@@ -35,8 +36,10 @@ angular.module('prwithyomanApp')
           }).success(function (data) {
             file.result = data;
             $scope.buttonShow = false;
+            $scope.buttonShow2 = false;
           }).error(function (data, status, headers, config) {
             file.result = data;
+            $scope.buttonShow2 = false;
           });
         }
       });

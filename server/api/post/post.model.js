@@ -23,7 +23,8 @@ var PostSchema = new Schema({
     name : String,
     imageUrl : String,
     category : String
-  }]
+  }],
+  commentCount : {type : Number, default : 0}
 });
 
 module.exports = mongoose.model('Post', PostSchema);

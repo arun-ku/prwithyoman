@@ -83,6 +83,6 @@
   text-decoration: none;
   color: #ffffff;
 }
-/*html::-webkit-scrollbar{
+.no-scrollbar::-webkit-scrollbar{
   display: none;
-}*/
+}

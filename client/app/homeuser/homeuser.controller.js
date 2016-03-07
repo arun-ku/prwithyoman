@@ -9,6 +9,7 @@ angular.module('prwithyomanApp')
     $scope.postShow = false;
     $scope.buttonShow = true;
     $scope.buttonShow2 = false;
+    $scope.commentShow = false;
     Auth.getCurrentUser().$promise.then(function(user){
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;

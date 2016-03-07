@@ -164,3 +164,50 @@ pre{
   opacity: .7;
 }
 
+/* enable absolute positioning */
+.inner-addon {
+  position: relative;
+}
+
+/* style icon */
+.inner-addon .glyphicon {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .glyphicon  { left:  0px;}
+.right-addon .glyphicon { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.commentDiv{
+  background-color: #f0e6ff;
+  padding: 5px;
+  margin-top: 5px;
+}
+.commentDiv:after{
+  visibility: hidden;
+  display: block;
+  font-size: 0;
+  content: " ";
+  clear: both;
+  height: 0;
+}
+.commentImageDiv{
+  display: inline-block;
+  float: left;
+}
+.commentImageDiv img{
+  height: 40px;
+  width: 40px;
+}
+.commentContentDiv{
+  display: inline-block;
+  float: left;
+  margin-left: 5px;
+}
+

@@ -1,44 +1,54 @@
 <div class="col-md-2"></div>
 <div class="col-md-8" id="formBox">
   <br/><br/><br/><br/><br/>
+
   <form action="" enctype="multipart/form-data">
     <div class="input-group">
       <span class="input-group-addon">Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-      <input type="text" class="form-control" placeholder="Enter Title for your complain"/>
+      <input type="text" class="form-control" placeholder="Enter Title for your complain" ng-model="comment.title"/>
     </div>
     <br/>
+
     <div class="input-group">
       <span class="input-group-addon">Your <br/>Complain</span>
-      <textarea rows="4" class="form-control" placeholder="Enter your complain here"></textarea>
+      <textarea rows="4" class="form-control" placeholder="Enter your complain here" data-ng-model="comment.content" ng-change="shouldShow()"></textarea>
     </div>
     <br/>
+
     <div class="pull-left">
-      <div class="dropdown" >
-        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" >
+      <div class="dropdown">
+        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="true">
               <span data-toggle="tooltip" title="Select a category for your Complain">
-                Category
+                {{comment.category}}
               <span class="caret"></span>
               </span>
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#" ng-click="setCategory('Buzz')">Buzz</a></li>
-          <li><a href="#" ng-click="setCategory('Lost And Found')">Lost And Found</a></li>
+          <li><a href="#" ng-click="setCategory('Hardware')">Hardware</a></li>
+          <li><a href="#" ng-click="setCategory('Software')">Software</a></li>
+          <li><a href="#" ng-click="setCategory('Infrastructure')">Infrastructure</a></li>
         </ul>
       </div>
-
-
-
-      <label for="upload" id="uploadBox" data-toggle="tooltip" title="Upload Image If Any(Optional).">
-        <span class="glyphicon glyphicon-paperclip" aria-hidden="true" ></span>
-        <input type="file" id="upload" name="file" file-model="post.file" style="display:none">
-      </label>
+      <!-----------------input type file----------------->
+      <div class="form_controls" style="display: inline-block; left : 60px;" id="uploadBox" data-toggle="tooltip"
+           title="Select An image. Make your Buzz cool">
+        <div class="upload_button_holder">
+          <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
+               resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
+        </div>
+        <img ng-show="buttonShow2"
+             src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326967/uploading_fqv2cv.gif"
+             style="height: 17px; width: 17px; position: relative; top: -22px; left: 18px; " alt=""/>
+      </div>
     </div>
 
-    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()" style="position: relative; top: 1px;">Submit</button>
+    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()"
+            style="position: relative; top: 1px;">Submit
+    </button>
   </form>
 </div>
 <div class="col-md-2"></div>
-
 
 
 <script type="text/javascript">

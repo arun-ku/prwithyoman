@@ -40,7 +40,7 @@
 #loginBg{
   position: absolute;
   z-index: -1;
-  background-image: url('../assets/images/mainbg.jpg');
+  background-image: url('https://res.cloudinary.com/buzzcloud/image/upload/v1457327039/mainbg_pzlxra.jpg');
   width: 100%;
   left: 0px;
   top: 0px;

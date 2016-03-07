@@ -26,7 +26,7 @@
           <div class="upload_button_holder">
             <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload" resetOnClick="true" ><i class="glyphicon glyphicon-camera"></i></div>
           </div>
-
+          <img ng-show="buttonShow2" src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326967/uploading_fqv2cv.gif" style="height: 17px; width: 17px; position: relative; top: -22px; left: 18px; " alt=""/>
         </div>
 
         <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton" ng-disabled="buttonShow2 || buttonShow && !frm.$dirty" value="Submit">
@@ -89,15 +89,15 @@
           <img class="postContentImage" ng-src="{{post.imageUrl}}" alt="" style="margin-top: 10px;"/>
         </div>
         <br/>
-        <button class="opinionButton" ng-click="updateOpinion('like', this.post._id, $index)"><img src="https://lh3.googleusercontent.com/-Q0NXSFXd1f8/AAAAAAAAAAI/AAAAAAAAAEU/z-_mY4Wc9ZU/s120-c/photo.jpg" alt=""/></button><span class="badge">{{post.count.likes}}</span>
-        <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id, $index)"><img src="http://www.sherv.net/cm/emoticons/blue-face/i-dont-know-smiley-emoticon.png" alt=""/></button><span class="badge">{{post.count.neutrals}}</span>
-        <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id, $index)"><img src="http://www.clearthoughts.in/Anger%202.png" alt=""/></button><span class="badge">{{post.count.dislikes}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('like', this.post._id, $index)"><img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326968/like1_oszi1c.png" alt=""/></button><span class="badge">{{post.count.likes}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id, $index)"><img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/neutral1_s1gne6.png" alt=""/></button><span class="badge">{{post.count.neutrals}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id, $index)"><img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/dislike2_gqlhxp.png" alt=""/></button><span class="badge">{{post.count.dislikes}}</span>
 
       </div>
 
 
       <div>
-        <img src="http://closera.com/skin/frontend/bizarre/skin2_new/images/Loading1.gif" style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
+        <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457327149/Loading1_egy19r.gif" style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
       </div>
       <h1 class="blurred">End Of content</h1>
 

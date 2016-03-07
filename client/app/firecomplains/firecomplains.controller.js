@@ -17,7 +17,7 @@ angular.module('prwithyomanApp')
     $scope.setCategory = function (category) {
       $scope.comment.category = category;
     }
-    $scope.uploadFiles = function(files){
+    /*$scope.uploadFiles = function(files){
       $scope.files1 = files;
       $scope.buttonShow2 = true;
       if (!$scope.files1) return;
@@ -45,7 +45,7 @@ angular.module('prwithyomanApp')
           });
         }
       });
-    };
+    };*/
 
     $scope.shouldShow = function(){
       $scope.showContent = $scope.comment.content;

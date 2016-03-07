@@ -2,10 +2,10 @@
 <div class="col-md-8" id="formBox">
   <br/><br/><br/><br/><br/>
 
-  <form action="" enctype="multipart/form-data">
+  <form action="" enctype="multipart/form-data" name="frm">
     <div class="input-group">
       <span class="input-group-addon">Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-      <input type="text" class="form-control" placeholder="Enter Title for your complain" ng-model="comment.title"/>
+      <input type="text" class="form-control" placeholder="Enter Title for your complain" ng-model="comment.title" required/>
     </div>
     <br/>
 
@@ -31,8 +31,8 @@
         </ul>
       </div>
       <!-----------------input type file----------------->
-      <div class="form_controls" style="display: inline-block; left : 60px;" id="uploadBox" data-toggle="tooltip"
-           title="Select An image. Make your Buzz cool">
+      <div class="form_controls" style="display: inline-block; left : 65px;" id="uploadBox" data-toggle="tooltip"
+           title="Select An image.">
         <div class="upload_button_holder">
           <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
                resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()"
+    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()" ng-disabled="buttonShow2 || !frm.$dirty || frm.$invalid"
             style="position: relative; top: 1px;">Submit
     </button>
   </form>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('prwithyomanApp')
-  .controller('FirecomplainsCtrl', ['$scope','Auth', function ($scope, Auth) {
+  .controller('FirecomplainsCtrl', ['$scope','Auth', 'Upload', 'cloudinary', function ($scope, Auth, $upload, cloudinary) {
     $scope.comment={};
     $scope.comment.category = 'Hardware';
     $scope.buttonShow = true;

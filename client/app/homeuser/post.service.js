@@ -7,6 +7,7 @@ angular.module('prwithyomanApp')
       this.items = [];
       this.busy = false;
       this.scrol = true;
+      this.done = false;
       this.i = 1;
       this.params = {
         limit : 10,
@@ -27,6 +28,7 @@ angular.module('prwithyomanApp')
         if(data.data.length <=0){
           this.busy = true;
           this.scrol = false;
+          this.done = true;
         }
       }.bind(this));
     };

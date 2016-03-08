@@ -7,7 +7,8 @@ var auth = require('../../auth/auth.service');
 var router = express.Router();
 
 router.get('/', controller.index);
-router.get('/:id', controller.show);
+router.get('/getCount/:id', controller.countUserComplains);
+router.get('/:id/:skip', controller.show);
 router.post('/',auth.isAuthenticated(),function(req, res, next){
   req.body.user = {
     userId : req.user._id,

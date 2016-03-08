@@ -45,6 +45,7 @@ angular.module('prwithyomanApp')
         if(data.data.length <=0){
           this.busy = true;
           this.scrol = false;
+          this.done = true;
         }
       }.bind(this));
     };

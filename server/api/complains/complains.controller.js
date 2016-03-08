@@ -13,12 +13,26 @@ exports.index = function(req, res) {
 
 // Get a single complains
 exports.show = function(req, res) {
-  Complains.findById(req.params.id, function (err, complains) {
+  Complains.find({'user.userId' : req.params.id}, function (err, complains) {
     if(err) { return handleError(res, err); }
     if(!complains) { return res.status(404).send('Not Found'); }
-    return res.json(complains);
+    var countOfComplains;
+    Complains.count({'user.userId' : req.params.id},function(err, count){
+      countOfComplains = count;
+      return res.json({data : complains, count : countOfComplains});
+    });
+  }).sort({fireDate : -1}).limit(5).skip(req.params.skip);
+};
+
+exports.countUserComplains = function(req, res) {
+  Complains.find({'user.userId' : req.params.id}, function (err, complains) {
+    if(err) { return handleError(res, err); }
+    if(!complains) { return res.status(404).send('Not Found'); }
+    console.log(complains.length);
+    return res.json({count : complains.length});
   });
 };
+
 
 // Creates a new complains in the DB.
 exports.create = function(req, res) {

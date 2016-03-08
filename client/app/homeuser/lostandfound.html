@@ -26,10 +26,10 @@
   </div>
 
 
-  <div>
+  <div ng-show="!posts.done">
     <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457327149/Loading1_egy19r.gif" style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
   </div>
-  <h1 class="blurred">End Of content</h1>
+  <h1 class="blurred" ng-show="posts.done">End Of content</h1>
 
   <script type="text/javascript">
     $(document).ready(function () {

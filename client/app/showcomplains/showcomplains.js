@@ -6,6 +6,6 @@ angular.module('prwithyomanApp')
       .state('home.complaints.showcomplains', {
         url: '/showcomplains',
         templateUrl: 'app/showcomplains/showcomplains.html',
-        controller: 'ShowcomplainsCtrl'
+        controller: 'ShowcomplainsCtrl as complains'
       });
   });

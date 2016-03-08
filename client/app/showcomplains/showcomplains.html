@@ -1,5 +1,41 @@
 <div class="col-md-12">
-This is the showcomplains view.
+  <br/>
+  <h4 ng-if="complains.initialCount==0" style="text-align: center;">No complains by you</h4>
+  <div class="postedComplains">
+    <table class="table">
+      <tr>
+      <th>S. No.</th>
+      <th>Title</th>
+      <th>Category</th>
+      <th>Status</th>
+      </tr>
+      <tr ng-repeat="complain in complains.filedComplains">
+        <td>{{complains.skip *5 + $index+1}}</td>
+        <td>{{complain.title}}</td>
+        <td>{{complain.category}}</td>
+        <td>{{complain.status.description}}</td>
+      </tr>
+    </table>
+  </div>
+
+
+  <div class="paginationDiv" style="text-align: center;">
+    <nav>
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li ng-repeat="page in complains.pagesArray track by $index"><a href="#" ng-click="complains.getPosts($index * 5)">{{$index + 1}}</a></li>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
 </div>
 
 

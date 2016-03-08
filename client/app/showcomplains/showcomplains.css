@@ -1,0 +1,6 @@
+.postedComplains{
+  min-height: 250px;
+}
+.disabledAnchor{
+  pointer-events: none;
+}

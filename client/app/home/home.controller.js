@@ -7,6 +7,9 @@ angular.module('prwithyomanApp')
       Auth.logout();
       $location.path('/');
     }
+    if(!Auth.isLoggedIn()){
+      $location.path('/');
+    }
     Auth.getCurrentUser().$promise.then(function(user){
       $scope.userImage = user.google.image.url;
       $scope.userName = user.name;

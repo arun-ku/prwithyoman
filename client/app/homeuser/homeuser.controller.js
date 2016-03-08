@@ -26,6 +26,7 @@ angular.module('prwithyomanApp')
     $scope.resetForm = function(){
       $scope.post.category = 'Activity';
       $scope.post.content = "";
+      $scope.showContent = "";
       $scope.files = '';
       $scope.buttonShow = true;
       $scope.frm.$setPristine();

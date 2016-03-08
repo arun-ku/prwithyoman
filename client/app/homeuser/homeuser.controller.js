@@ -10,6 +10,8 @@ angular.module('prwithyomanApp')
     $scope.buttonShow = true;
     $scope.buttonShow2 = false;
     $scope.commentShow = false;
+    $scope.post.category = 'Activity';
+    $scope.opinionButtonDisabled = false;
     Auth.getCurrentUser().$promise.then(function(user){
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;
@@ -17,34 +19,17 @@ angular.module('prwithyomanApp')
 
 
     $scope.uploadFiles = function(files){
-      $scope.files1 = files;
-      $scope.buttonShow2 = true;
-      if (!$scope.files1) return;
-      angular.forEach(files, function(file){
-        if (file && !file.$error) {
-          file.upload = $upload.upload({
-            url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
-            data: {
-              upload_preset: cloudinary.config().upload_preset,
-              tags: 'myphotoalbum',
-              context: 'photo=' + new Date(),
-              file: file,
-              bypassAuth : 'pass'
-            }
-          }).progress(function (e) {
-            file.progress = Math.round((e.loaded * 100.0) / e.total);
-            file.status = "Uploading... " + file.progress + "%";
-          }).success(function (data) {
-            file.result = data;
-            $scope.buttonShow = false;
-            $scope.buttonShow2 = false;
-          }).error(function (data, status, headers, config) {
-            file.result = data;
-            $scope.buttonShow2 = false;
-          });
-        }
-      });
+      $scope.files = files;
+      $scope.buttonShow = false;
     };
+
+    $scope.resetForm = function(){
+      $scope.post.category = 'Activity';
+      $scope.post.content = "";
+      $scope.files = '';
+      $scope.buttonShow = true;
+      $scope.frm.$setPristine();
+    }
 
     $scope.shouldShow = function(){
       $scope.showContent = $scope.post.content;
@@ -74,7 +59,10 @@ angular.module('prwithyomanApp')
     }
 
     $scope.updateOpinion = function(type, postId, i){
+      $scope.opinionButtonDisabled = true;
       PostService.update({postId : postId, opinion : type},function(data){
+
+        $scope.opinionButtonDisabled = false;
         if(data.resCode != 0){
           $scope.posts.items[i].count[type+'s']+=1;
           if(data.type!=''){
@@ -89,7 +77,6 @@ angular.module('prwithyomanApp')
     $scope.billuCaller = function(){
       return new Reddit().billu();
     }
-    $scope.post.category = 'Activity';
     $scope.setCategory = function(category){
       $scope.post.category = category;
     }
@@ -108,83 +95,182 @@ angular.module('prwithyomanApp')
       $scope.frm.$setPristine();
       $scope.buttonShow = true;
       $scope.postShow = false;
-      if($scope.post.category == 'Type'){
-        $scope.post.category = 'Activity';
-      }
-      $scope.post.buzzDate = Date.now();
-      if($scope.files1){
-        $scope.post.imageUrl = $scope.files1[0].result.secure_url;
-      }else{
-        $scope.post.imageUrl ='';
-      }
+      $scope.buttonShow2 = true;
+      $scope.post.imageUrl ='';
 
-      $scope.post.user = '';
-      var urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-      $scope.post.content = $scope.post.content.replace(/\n/g, "<br/>");
-      if($scope.post.content.indexOf('https://') === -1 || $scope.post.content.indexOf('http://') === -1) {
-        $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
-      } else {
-        $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
-      }
-      var fd = new FormData();
-      for(var key in $scope.post){
-        fd.append(key,$scope.post[key]);
-      }
-      $http.post("/api/posts", fd,{
+      if($scope.files && $scope.files!=''){
+        angular.forEach($scope.files, function(file){
+          if (file && !file.$error) {
+            file.upload = $upload.upload({
+              url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
+              data: {
+                upload_preset: cloudinary.config().upload_preset,
+                tags: 'myphotoalbum',
+                context: 'photo=' + new Date(),
+                file: file,
+                bypassAuth : 'pass'
+              }
+            }).progress(function (e) {
+              file.progress = Math.round((e.loaded * 100.0) / e.total);
+              file.status = "Uploading... " + file.progress + "%";
+            }).success(function (data) {
+              $scope.post.imageUrl = data.secure_url;
+              $scope.post.buzzDate = Date.now();
+
+              $scope.post.user = '';
+              var urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+              $scope.post.content = $scope.post.content.replace(/\n/g, "<br/>");
+              if($scope.post.content.indexOf('https://') === -1 || $scope.post.content.indexOf('http://') === -1) {
+                $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
+              } else {
+                $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
+              }
+              var fd = new FormData();
+              for(var key in $scope.post){
+                fd.append(key,$scope.post[key]);
+              }
+              $http.post("/api/posts", fd,{
+                transformRequest : angular.identity,
+                headers: { 'Content-Type' : undefined}
+              }).then(function(response){
+                if(response.data.result == 0){
+                  $scope.buttonShow2 = false;
+                  toastr["error"]("The file you sent is of invalid type. Please send an image only", "Invalid File",{
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "showDuration": "2000",
+                    "hideDuration": "1000",
+                    "timeOut": "8000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                  });
+
+
+                } else {
+
+                  $scope.posts.items.unshift(response.data);
+                  $scope.posts.updateOffsetByOne();
+                  $scope.buttonShow2 = false;
+                  $scope.files = '';
+                  toastr["success"]("Your post has been submitted successfully", "Post Submitted",{
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "showDuration": "2000",
+                    "hideDuration": "1000",
+                    "timeOut": "4000",
+                    "extendedTimeOut": "1000",
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                  });
+
+                }
+                $scope.post.content = '';
+                $scope.post.category = 'Activity';
+                $scope.postShow = false;
+                $scope.canvasShow = false;
+                $scope.post.file = {};
+                /*$scope.getPosts();*/
+                /*window.location='#/';*/
+              }, function (err) {
+                console.log('errrrr',err);
+              });
+            }).error(function (data, status, headers, config) {
+              file.result = data;
+            });
+          }
+        });
+      }else{
+        $scope.post.buzzDate = Date.now();
+
+        $scope.post.user = '';
+        var urlPattern = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+        $scope.post.content = $scope.post.content.replace(/\n/g, "<br/>");
+        if($scope.post.content.indexOf('https://') === -1 || $scope.post.content.indexOf('http://') === -1) {
+          $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
+        } else {
+          $scope.post.content = $scope.post.content.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
+        }
+        var fd = new FormData();
+        for(var key in $scope.post){
+          fd.append(key,$scope.post[key]);
+        }
+        $http.post("/api/posts", fd,{
           transformRequest : angular.identity,
           headers: { 'Content-Type' : undefined}
         }).then(function(response){
-        if(response.data.result == 0){
-          toastr["error"]("The file you sent is of invalid type. Please send an image only", "Invalid File",{
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "showDuration": "2000",
-            "hideDuration": "1000",
-            "timeOut": "8000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          });
+          if(response.data.result == 0){
+            $scope.buttonShow2 = false;
+            toastr["error"]("The file you sent is of invalid type. Please send an image only", "Invalid File",{
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "showDuration": "2000",
+              "hideDuration": "1000",
+              "timeOut": "8000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            });
 
 
-        } else {
+          } else {
 
-          $scope.posts.items.unshift(response.data);
-          $scope.posts.updateOffsetByOne();
-          toastr["success"]("Your post has been submitted successfully", "Post Submitted",{
-            "closeButton": true,
-            "debug": false,
-            "newestOnTop": true,
-            "progressBar": true,
-            "positionClass": "toast-top-right",
-            "preventDuplicates": false,
-            "showDuration": "2000",
-            "hideDuration": "1000",
-            "timeOut": "4000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-          });
+            $scope.posts.items.unshift(response.data);
+            $scope.posts.updateOffsetByOne();
+            $scope.buttonShow2 = false;
+            toastr["success"]("Your post has been submitted successfully", "Post Submitted",{
+              "closeButton": true,
+              "debug": false,
+              "newestOnTop": true,
+              "progressBar": true,
+              "positionClass": "toast-top-right",
+              "preventDuplicates": false,
+              "showDuration": "2000",
+              "hideDuration": "1000",
+              "timeOut": "4000",
+              "extendedTimeOut": "1000",
+              "showEasing": "swing",
+              "hideEasing": "linear",
+              "showMethod": "fadeIn",
+              "hideMethod": "fadeOut"
+            });
 
-        }
-        $scope.post.content = '';
-        $scope.post.category = 'Activity';
-        $scope.postShow = false;
-        $scope.canvasShow = false;
-        $scope.post.file = {};
-        /*$scope.getPosts();*/
-        /*window.location='#/';*/
-      }, function (err) {
+          }
+          $scope.post.content = '';
+          $scope.post.category = 'Activity';
+          $scope.postShow = false;
+          $scope.canvasShow = false;
+          $scope.post.file = {};
+          /*$scope.getPosts();*/
+          /*window.location='#/';*/
+        }, function (err) {
           console.log('errrrr',err);
         });
+      }
+
+
+
+
+
+
     }
   }])
   .controller('LostAndFoundCtrl', function ($scope, Auth, $http, Reddit) {

@@ -1,17 +1,17 @@
 <div class="col-md-2"></div>
 <div class="col-md-8" id="formBox">
-  <br/><br/><br/><br/><br/>
+  <br/><br/>
 
   <form action="" enctype="multipart/form-data" name="frm">
-    <div class="input-group">
-      <span class="input-group-addon">Title &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-      <input type="text" class="form-control" placeholder="Enter Title for your complain" ng-model="comment.title" required/>
+    <div class="form-group">
+      <label for="title">Title : </label>
+      <input type="text" id="title" class="form-control" placeholder="Enter Title for your complain" ng-model="complain.title" required/>
     </div>
     <br/>
 
-    <div class="input-group">
-      <span class="input-group-addon">Your <br/>Complain</span>
-      <textarea rows="4" class="form-control" placeholder="Enter your complain here" data-ng-model="comment.content" ng-change="shouldShow()"></textarea>
+    <div class="form-group">
+      <label for="content">Description : </label>
+      <textarea rows="4" id="content" class="form-control" placeholder="Enter your complain here" data-ng-model="complain.content" ng-change="shouldShow()"></textarea>
     </div>
     <br/>
 
@@ -20,7 +20,7 @@
         <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="true">
               <span data-toggle="tooltip" title="Select a category for your Complain">
-                {{comment.category}}
+                {{complain.category}}
               <span class="caret"></span>
               </span>
         </button>
@@ -31,7 +31,7 @@
         </ul>
       </div>
       <!-----------------input type file----------------->
-      <div class="form_controls" style="display: inline-block; left : 65px;" id="uploadBox" data-toggle="tooltip"
+      <div class="form_controls" style="display: inline-block; left : 110px;" id="uploadBox" data-toggle="tooltip"
            title="Select An image.">
         <div class="upload_button_holder">
           <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitPost()" ng-disabled="buttonShow2 || !frm.$dirty || frm.$invalid"
+    <button class="btn btn-primary btn-sm pull-right" id="submitButton" ng-click="submitComplain()" ng-disabled="buttonShow2 || !frm.$dirty || frm.$invalid"
             style="position: relative; top: 1px;">Submit
     </button>
   </form>

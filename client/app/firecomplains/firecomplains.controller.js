@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('prwithyomanApp')
-  .controller('FirecomplainsCtrl', ['$scope','Auth', 'Upload', 'cloudinary', function ($scope, Auth, $upload, cloudinary) {
-    $scope.comment={};
-    $scope.comment.category = 'Hardware';
+  .controller('FirecomplainsCtrl', ['$scope','Auth', 'Upload', 'cloudinary','ComplainService', function ($scope, Auth, $upload, cloudinary, Complain) {
+    $scope.complain={};
+    $scope.complain.category = 'Hardware';
     $scope.buttonShow = true;
     $scope.buttonShow2 = false;
-    $scope.comment.title = "";
-    $scope.comment.content = "";
+    $scope.complain.title = "";
+    $scope.complain.content = "";
     Auth.getCurrentUser().$promise.then(function (user) {
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;
@@ -15,7 +15,7 @@ angular.module('prwithyomanApp')
 
 
     $scope.setCategory = function (category) {
-      $scope.comment.category = category;
+      $scope.complain.category = category;
     }
     $scope.uploadFiles = function(files){
       $scope.files1 = files;
@@ -48,9 +48,26 @@ angular.module('prwithyomanApp')
     };
 
     $scope.shouldShow = function(){
-      $scope.showContent = $scope.comment.content;
-      if($scope.comment.content == ""){
+      $scope.showContent = $scope.complain.content;
+      if($scope.complain.content == ""){
         $scope.frm.$setPristine();
       }
+    }
+
+    $scope.submitComplain = function(){
+
+      if($scope.files1){
+        $scope.complain.imageUrl = $scope.files1[0].result.secure_url;
+      }else{
+        $scope.complain.imageUrl ='';
+      }
+      $scope.complainObj = {
+        title : $scope.complain.title,
+        content : $scope.complain.content,
+        category : $scope.complain.category,
+        fireDate : Date.now(),
+        imageUrl : $scope.complain.imageUrl
+      }
+      Complain.addComplain($scope.complainObj);
     }
   }]);

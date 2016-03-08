@@ -8,7 +8,11 @@ var ComplainsSchema = new Schema({
   content : String,
   category : String,
   fireDate : String,
-  status : {type : String, default : 'Pending'},
+  status : {
+    code : {type : String, default : '0'},
+    description : {type : String, default : 'Pending'}
+  },
+  imageUrl : String,
   user : {
     userId : String,
     name : String,

@@ -29,20 +29,28 @@
           <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
                resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
         </div>
-        <img ng-show="buttonShow2"
-             src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326967/uploading_fqv2cv.gif"
-             style="height: 17px; width: 17px; position: relative; top: -22px; left: 18px; " alt=""/>
+
       </div>
 
       <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton"
-             ng-disabled="buttonShow2 || buttonShow && !frm.$dirty" value="Submit">
+             ng-disabled="buttonShow && !frm.$dirty" value="Submit">
       <br/>
 
     </form>
 
   </div>
-  <div ng-hide="buttonShow && !frm.$dirty" class="onePost"
-       style="position: relative; top: -8px; background-color: #ffffcc;" id="preview">
+  <img ng-show="buttonShow2"
+       src="https://res.cloudinary.com/buzzcloud/image/upload/v1457419559/loading_jerbkj.gif"
+       style="height: 400px; width: 50%; position: absolute; top: -70px; left: 25%; margin-top: 20px; z-index: 99;"
+       alt=""/>
+
+  <div ng-hide="buttonShow && !frm.$dirty" class="onePost cancelContainer" style="position: relative; top: -8px; background-color: #ffffcc;" id="preview">
+    <div class="cancelOptionDiv">
+      <div class="cancelButtonContainer">
+        <button class="btn btn-danger" ng-click="resetForm()"><i class="glyphicon glyphicon-remove-circle"></i> Cancel</button>
+        <button class="btn btn-primary" ng-click="submitPost()"><i class="glyphicon glyphicon-ok-circle"></i> Submit</button>
+      </div>
+    </div>
     <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']">
       <div class="tri-1"></div>
       <span>{{post.category}}</span></div>
@@ -67,8 +75,8 @@
         </div>
       </div>
 
-      <div class="file" ng-repeat="file in files1">
-        <img class="postContentImage" ngf-src="file.result.url || file">
+      <div class="file" ng-repeat="file in files">
+        <img class="postContentImage" ngf-src="file">
       </div>
     </div>
 
@@ -103,16 +111,20 @@
         <img class="postContentImage" ng-src="{{post.imageUrl}}" alt="" style="margin-top: 10px;"/>
       </div>
       <br/>
-      <button class="opinionButton" ng-click="updateOpinion('like', this.post._id, $index)"><img
+      <button class="opinionButton" ng-click="updateOpinion('like', this.post._id, $index)"
+              ng-disabled="opinionButtonDisabled"><img
         src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326968/like1_oszi1c.png" alt=""/></button>
       <span class="badge">{{post.count.likes}}</span>
-      <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id, $index)"><img
+      <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id, $index)"
+              ng-disabled="opinionButtonDisabled"><img
         src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/neutral1_s1gne6.png" alt=""/></button>
       <span class="badge">{{post.count.neutrals}}</span>
-      <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id, $index)"><img
+      <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id, $index)"
+              ng-disabled="opinionButtonDisabled"><img
         src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/dislike2_gqlhxp.png" alt=""/></button>
       <span class="badge">{{post.count.dislikes}}</span>
-      <button class="opinionButton" ng-click="this.commentShow = true;"><i class="glyphicon glyphicon-comment"></i>
+      <button class="opinionButton" ng-click="this.commentShow = true;" ng-disabled="opinionButtonDisabled"><i
+        class="glyphicon glyphicon-comment"></i>
       </button>
       <span class="badge">29</span>
 

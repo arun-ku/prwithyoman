@@ -11,7 +11,7 @@
       </tr>
       <tr ng-repeat="complain in complains.filedComplains">
         <td>{{complains.skip *5 + $index+1}}</td>
-        <td>{{complain.title}}</td>
+        <td><a href="" ui-sref="home.complain({complainId : complain._id})" style="width: 100px; word-break: break-all; display: inline-block; max-height: 40px; overflow: hidden;">{{complain.title}}</a></td>
         <td>{{complain.category}}</td>
         <td>{{complain.status.description}}</td>
       </tr>
@@ -19,7 +19,7 @@
   </div>
 
 
-  <div class="paginationDiv" style="text-align: center;">
+  <div class="paginationDiv" style="text-align: center;" ng-show="complains.numberOfPages > 1">
     <nav>
       <ul class="pagination">
         <li>

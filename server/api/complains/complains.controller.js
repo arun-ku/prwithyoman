@@ -21,15 +21,14 @@ exports.show = function(req, res) {
       countOfComplains = count;
       return res.json({data : complains, count : countOfComplains});
     });
-  }).sort({fireDate : -1}).limit(5).skip(req.params.skip);
+  }).sort({fireDate : -1}).limit(req.params.limit).skip(req.params.skip);
 };
 
 exports.countUserComplains = function(req, res) {
-  Complains.find({'user.userId' : req.params.id}, function (err, complains) {
+  Complains.findById( req.params.id, function (err, complains) {
     if(err) { return handleError(res, err); }
     if(!complains) { return res.status(404).send('Not Found'); }
-    console.log(complains.length);
-    return res.json({count : complains.length});
+    return res.json(complains);
   });
 };
 

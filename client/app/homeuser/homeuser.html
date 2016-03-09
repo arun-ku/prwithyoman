@@ -1,106 +1,73 @@
-<div nv-file-drop="" uploader="uploader">
-  <div class="postDiv">
-    <form method="post" enctype="multipart/form-data" name="frm" ng-submit="submitPost()">
-      <textarea rows="4" class="form-control" placeholder="Create A buzz..." ng-change="shouldShow()"
-                data-ng-model="post.content"></textarea><br/>
+<div class="col-md-11">
+  <div nv-file-drop="" uploader="uploader">
+    <div class="postDiv">
+      <form method="post" enctype="multipart/form-data" name="frm" ng-submit="submitPost()">
+        <textarea rows="4" class="form-control" placeholder="Create A buzz..." ng-change="shouldShow()"
+                  data-ng-model="post.content"></textarea><br/>
 
-      <div class="dropdown">
-        <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="true">
+        <div class="dropdown">
+          <button class="btn btn-success btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="true">
                   <span data-toggle="tooltip" title="Select a category for your Buzz">
                     {{post.category}}
                   <span class="caret"></span>
                   </span>
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-          <li><a href="#" ng-click="setCategory('Activity')">Activity</a></li>
-          <li><a href="#" ng-click="setCategory('Lost And Found')">Lost And Found</a></li>
-        </ul>
-      </div>
-
-
-      <!--<label for="upload"  data-ng-model="abc" ng-change="shouldShow()">
-        <span class="glyphicon glyphicon-camera" aria-hidden="true" ></span>
-        <input type="file" id="upload" name="file" file-model="post.file" style="display:none" valid-file="file" ng-model="file" accept="image/*"/>
-      </label>-->
-      <div class="form_controls" style="display: inline-block;" id="uploadBox" data-toggle="tooltip"
-           title="Select An image. Make your Buzz cool">
-        <div class="upload_button_holder">
-          <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
-               resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            <li><a href="#" ng-click="setCategory('Activity')">Activity</a></li>
+            <li><a href="#" ng-click="setCategory('Lost And Found')">Lost And Found</a></li>
+          </ul>
         </div>
 
-      </div>
 
-      <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton"
-             ng-disabled="buttonShow && !frm.$dirty" value="Submit">
-      <br/>
+        <!--<label for="upload"  data-ng-model="abc" ng-change="shouldShow()">
+          <span class="glyphicon glyphicon-camera" aria-hidden="true" ></span>
+          <input type="file" id="upload" name="file" file-model="post.file" style="display:none" valid-file="file" ng-model="file" accept="image/*"/>
+        </label>-->
+        <div class="form_controls" style="display: inline-block;" id="uploadBox" data-toggle="tooltip"
+             title="Select An image. Make your Buzz cool">
+          <div class="upload_button_holder">
+            <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
+                 resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
+          </div>
 
-    </form>
+        </div>
 
-  </div>
-  <img ng-show="buttonShow2"
-       src="https://res.cloudinary.com/buzzcloud/image/upload/v1457419559/loading_jerbkj.gif"
-       style="height: 400px; width: 50%; position: absolute; top: -70px; left: 25%; margin-top: 20px; z-index: 99;"
-       alt=""/>
+        <input type="submit" class="btn btn-primary btn-sm pull-right" id="submitButton"
+               ng-disabled="buttonShow && !frm.$dirty" value="Submit">
+        <br/>
 
-  <div ng-hide="buttonShow && !frm.$dirty" class="onePost cancelContainer" style="position: relative; top: -8px; background-color: #ffffcc;" id="preview">
-    <div class="cancelOptionDiv">
-      <div class="cancelButtonContainer">
-        <button class="btn btn-danger" ng-click="resetForm()"><i class="glyphicon glyphicon-remove-circle"></i> Cancel</button>
-        <button class="btn btn-primary" ng-click="submitPost()"><i class="glyphicon glyphicon-ok-circle"></i> Submit</button>
-      </div>
+      </form>
+
     </div>
-    <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']">
-      <div class="tri-1"></div>
-      <span>{{post.category}}</span></div>
-    <div class="postHeader">
-      <img ng-src="{{userImageUrl}}" class="postHeaderImage" alt=""/>
+    <img ng-show="buttonShow2"
+         src="https://res.cloudinary.com/buzzcloud/image/upload/v1457419559/loading_jerbkj.gif"
+         style="height: 400px; width: 50%; position: absolute; top: -70px; left: 25%; margin-top: 20px; z-index: 99;"
+         alt=""/>
 
-      <div class="postHeaderDiv">
-        <span class="postHeaderSpan">{{userName}} created a new Buzz</span><br/>
-        <span class="postHeaderDateSpan">a few seconds ago</span>
-      </div>
-    </div>
-    <div class="postContentDiv">
-      <div>
-        <!--<span class="postContentSpan" ng-bind-html="post.content"></span>-->
-        <div hm-read-more
-             hm-text="{{ showContent }}"
-             hm-limit="500"
-             hm-more-text="read more"
-             hm-less-text="read less"
-             hm-dots-class="dots"
-             hm-link-class="links">
+    <div ng-hide="buttonShow && !frm.$dirty" class="onePost cancelContainer" style="position: relative; top: -8px; background-color: #ffffcc;" id="preview">
+      <div class="cancelOptionDiv">
+        <div class="cancelButtonContainer">
+          <button class="btn btn-danger" ng-click="resetForm()"><i class="glyphicon glyphicon-remove-circle"></i> Cancel</button>
+          <button class="btn btn-primary" ng-click="submitPost()"><i class="glyphicon glyphicon-ok-circle"></i> Submit</button>
         </div>
       </div>
-
-      <div class="file" ng-repeat="file in files">
-        <img class="postContentImage" ngf-src="file">
-      </div>
-    </div>
-
-  </div>
-
-  <div infinite-scroll='posts.nextPage()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.3'
-       infinite-scroll-disabled="isData()">
-    <div ng-repeat="post in posts.items" class="onePost">
       <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']">
         <div class="tri-1"></div>
-        <span>&nbsp &nbsp{{post.category}}</span></div>
+        <span>{{post.category}}</span></div>
       <div class="postHeader">
-        <img ng-src="{{post.user.imageUrl}}" class="postHeaderImage" alt=""/>
+        <img ng-src="{{userImageUrl}}" class="postHeaderImage" alt=""/>
 
         <div class="postHeaderDiv">
-          <span class="postHeaderSpan">{{post.user.name}} Created a new Buzz.</span><br/>
-          <span class="postHeaderDateSpan" am-time-ago="post.buzzDate"></span>
+          <span class="postHeaderSpan">{{userName}} created a new Buzz</span><br/>
+          <span class="postHeaderDateSpan">a few seconds ago</span>
         </div>
       </div>
       <div class="postContentDiv">
         <div>
           <!--<span class="postContentSpan" ng-bind-html="post.content"></span>-->
           <div hm-read-more
-               hm-text="{{ post.content}}"
+               hm-text="{{ showContent }}"
                hm-limit="500"
                hm-more-text="read more"
                hm-less-text="read less"
@@ -108,63 +75,99 @@
                hm-link-class="links">
           </div>
         </div>
-        <img class="postContentImage" ng-src="{{post.imageUrl}}" alt="" style="margin-top: 10px;"/>
-      </div>
-      <br/>
-      <button class="opinionButton" ng-click="updateOpinion('like', this.post._id, $index)"
-              ng-disabled="opinionButtonDisabled"><img
-        src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326968/like1_oszi1c.png" alt=""/></button>
-      <span class="badge">{{post.count.likes}}</span>
-      <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id, $index)"
-              ng-disabled="opinionButtonDisabled"><img
-        src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/neutral1_s1gne6.png" alt=""/></button>
-      <span class="badge">{{post.count.neutrals}}</span>
-      <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id, $index)"
-              ng-disabled="opinionButtonDisabled"><img
-        src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/dislike2_gqlhxp.png" alt=""/></button>
-      <span class="badge">{{post.count.dislikes}}</span>
-      <button class="opinionButton" ng-click="this.commentShow = true;" ng-disabled="opinionButtonDisabled"><i
-        class="glyphicon glyphicon-comment"></i>
-      </button>
-      <span class="badge">29</span>
 
-      <div class="comments" ng-show="commentShow">
-        <form method="post">
-          <div class="input-group" style="margin-top: 10px;">
-            <span class="input-group-btn">
-              <img src="{{userImageUrl}}" alt="" style="height: 34px; width: 30px;"/>
-            </span>
-            <textarea rows="1" class="form-control no-scrollbar" placeholder="Add a comment"></textarea>
-            <span class="input-group-btn">
-              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-comment"></i></button>
-            </span>
-          </div>
-
-        </form>
-        <div class="commentDiv" ng-repeat="i in [1,2,3,4,5]">
-          <div class="commentImageDiv"><img src="{{userImageUrl}}" alt=""/></div>
-          <div class="commentContentDiv"><b>{{userName}} : </b>i am writing something <br/>then i write something else
-            <br/> then again somehing else.
-            <br/>something else
-          </div>
+        <div class="file" ng-repeat="file in files">
+          <img class="postContentImage" ngf-src="file">
         </div>
       </div>
 
     </div>
 
+    <div infinite-scroll='posts.nextPage()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.3'
+         infinite-scroll-disabled="isData()">
+      <div ng-repeat="post in posts.items" class="onePost">
+        <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']">
+          <div class="tri-1"></div>
+          <span>&nbsp &nbsp{{post.category}}</span></div>
+        <div class="postHeader">
+          <img ng-src="{{post.user.imageUrl}}" class="postHeaderImage" alt=""/>
 
-    <div ng-show="!posts.done">
-      <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457327149/Loading1_egy19r.gif"
-           style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
+          <div class="postHeaderDiv">
+            <span class="postHeaderSpan">{{post.user.name}} Created a new Buzz.</span><br/>
+            <span class="postHeaderDateSpan" am-time-ago="post.buzzDate"></span>
+          </div>
+        </div>
+        <div class="postContentDiv">
+          <div>
+            <!--<span class="postContentSpan" ng-bind-html="post.content"></span>-->
+            <div hm-read-more
+                 hm-text="{{ post.content}}"
+                 hm-limit="500"
+                 hm-more-text="read more"
+                 hm-less-text="read less"
+                 hm-dots-class="dots"
+                 hm-link-class="links">
+            </div>
+          </div>
+          <img class="postContentImage" ng-src="{{post.imageUrl}}" alt="" style="margin-top: 10px;"/>
+        </div>
+        <br/>
+        <button class="opinionButton" ng-click="updateOpinion('like', this.post._id, $index)"
+                ng-disabled="opinionButtonDisabled"><img
+          src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326968/like1_oszi1c.png" alt=""/></button>
+        <span class="badge">{{post.count.likes}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('neutral', this.post._id, $index)"
+                ng-disabled="opinionButtonDisabled"><img
+          src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/neutral1_s1gne6.png" alt=""/></button>
+        <span class="badge">{{post.count.neutrals}}</span>
+        <button class="opinionButton" ng-click="updateOpinion('dislike', this.post._id, $index)"
+                ng-disabled="opinionButtonDisabled"><img
+          src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326969/dislike2_gqlhxp.png" alt=""/></button>
+        <span class="badge">{{post.count.dislikes}}</span>
+        <button class="opinionButton" ng-click="this.commentShow = true;" ng-disabled="opinionButtonDisabled"><i
+          class="glyphicon glyphicon-comment"></i>
+        </button>
+        <span class="badge">29</span>
+
+        <div class="comments" ng-show="commentShow">
+          <form method="post">
+            <div class="input-group" style="margin-top: 10px;">
+            <span class="input-group-btn">
+              <img src="{{userImageUrl}}" alt="" style="height: 34px; width: 30px;"/>
+            </span>
+              <textarea rows="1" class="form-control no-scrollbar" placeholder="Add a comment"></textarea>
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-comment"></i></button>
+            </span>
+            </div>
+
+          </form>
+          <div class="commentDiv" ng-repeat="i in [1,2,3,4,5]">
+            <div class="commentImageDiv"><img src="{{userImageUrl}}" alt=""/></div>
+            <div class="commentContentDiv"><b>{{userName}} : </b>i am writing something <br/>then i write something else
+              <br/> then again somehing else.
+              <br/>something else
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div ng-show="!posts.done">
+        <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457327149/Loading1_egy19r.gif"
+             style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
+      </div>
+      <h1 class="blurred"  ng-show="posts.done">End Of content</h1>
     </div>
-    <h1 class="blurred"  ng-show="posts.done">End Of content</h1>
+
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+        $('#on').addClass('active');
+      });
+    </script>
   </div>
 
-
-  <script type="text/javascript">
-    $(document).ready(function () {
-      $('[data-toggle="tooltip"]').tooltip();
-      $('#on').addClass('active');
-    });
-  </script>
 </div>

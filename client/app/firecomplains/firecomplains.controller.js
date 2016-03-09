@@ -8,6 +8,8 @@ angular.module('prwithyomanApp')
     $scope.buttonShow2 = false;
     $scope.complain.title = "";
     $scope.complain.content = "";
+    $scope.complain.imageUrl ='';
+
     Auth.getCurrentUser().$promise.then(function (user) {
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;
@@ -18,33 +20,7 @@ angular.module('prwithyomanApp')
       $scope.complain.category = category;
     }
     $scope.uploadFiles = function(files){
-      $scope.files1 = files;
-      $scope.buttonShow2 = true;
-      if (!$scope.files1) return;
-      angular.forEach(files, function(file){
-        if (file && !file.$error) {
-          file.upload = $upload.upload({
-            url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
-            data: {
-              upload_preset: cloudinary.config().upload_preset,
-              tags: 'myphotoalbum',
-              context: 'photo=' + new Date(),
-              file: file,
-              bypassAuth : 'pass'
-            }
-          }).progress(function (e) {
-            file.progress = Math.round((e.loaded * 100.0) / e.total);
-            file.status = "Uploading... " + file.progress + "%";
-          }).success(function (data) {
-            file.result = data;
-            $scope.buttonShow = false;
-            $scope.buttonShow2 = false;
-          }).error(function (data, status, headers, config) {
-            file.result = data;
-            $scope.buttonShow2 = false;
-          });
-        }
-      });
+      $scope.files = files;
     };
 
     $scope.shouldShow = function(){
@@ -55,12 +31,8 @@ angular.module('prwithyomanApp')
     }
 
     $scope.submitComplain = function(){
+      $scope.buttonShow2 = true;
 
-      if($scope.files1){
-        $scope.complain.imageUrl = $scope.files1[0].result.secure_url;
-      }else{
-        $scope.complain.imageUrl ='';
-      }
       $scope.complainObj = {
         title : $scope.complain.title,
         content : $scope.complain.content,
@@ -68,6 +40,83 @@ angular.module('prwithyomanApp')
         fireDate : Date.now(),
         imageUrl : $scope.complain.imageUrl
       }
-      Complain.addComplain($scope.complainObj);
+
+      if($scope.files && $scope.files!='') {
+        angular.forEach($scope.files, function (file) {
+          if (file && !file.$error) {
+            file.upload = $upload.upload({
+              url: "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
+              data: {
+                upload_preset: cloudinary.config().upload_preset,
+                tags: 'myphotoalbum',
+                context: 'photo=' + new Date(),
+                file: file,
+                bypassAuth: 'pass'
+              }
+            }).progress(function (e) {
+              file.progress = Math.round((e.loaded * 100.0) / e.total);
+              file.status = "Uploading... " + file.progress + "%";
+            }).success(function (data) {
+              $scope.complainObj.imageUrl = data.secure_url;
+              Complain.addComplain($scope.complainObj,function(){
+                $scope.frm.$setPristine();
+                $scope.complain.title = "";
+                $scope.complain.content = "";
+                $scope.complain.imageUrl ='';
+                $scope.files = '';
+                $scope.complain.category = 'Hardware';
+                $scope.buttonShow2 = false;
+                toastr["success"]("Thank you for your feedback.", "Complain Submitted",{
+                  "closeButton": true,
+                  "debug": false,
+                  "newestOnTop": true,
+                  "progressBar": true,
+                  "positionClass": "toast-top-right",
+                  "preventDuplicates": false,
+                  "showDuration": "2000",
+                  "hideDuration": "1000",
+                  "timeOut": "4000",
+                  "extendedTimeOut": "1000",
+                  "showEasing": "swing",
+                  "hideEasing": "linear",
+                  "showMethod": "fadeIn",
+                  "hideMethod": "fadeOut"
+                });
+              });
+            }).error(function (data, status, headers, config) {
+              file.result = data;
+            });
+          }
+        });
+
+      }else{
+        Complain.addComplain($scope.complainObj,function(){
+          $scope.frm.$setPristine();
+          $scope.complain.title = "";
+          $scope.complain.content = "";
+          $scope.complain.imageUrl ='';
+          $scope.files = '';
+          $scope.complain.category = 'Hardware';
+          $scope.buttonShow2 = false;
+          toastr["success"]("Thank you for your feedback.", "Complain Submitted",{
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "showDuration": "2000",
+            "hideDuration": "1000",
+            "timeOut": "4000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+          });
+        });
+      }
+
+
     }
   }]);

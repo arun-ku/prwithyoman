@@ -8,7 +8,7 @@ angular.module('prwithyomanApp')
       complains.currentUser = user;
       complains.nextButtonShow = true;
       complains.previousButtonShow = false;
-      complain.getCount({userId : complains.currentUser._id, offset : 0},function(data){
+      complain.getComplains({userId : complains.currentUser._id, offset : 0,limit : 5},function(data){
         complains.initialCount = data.count;
         complains.numberOfPages = Math.floor((data.count-1)/5)+1;
         complains.pagesArray = Array(complains.numberOfPages);
@@ -19,7 +19,7 @@ angular.module('prwithyomanApp')
     });
 
     complains.getPosts = function(skip){
-      complain.getComplains({userId : complains.currentUser._id,offset : skip*5},function(data){
+      complain.getComplains({userId : complains.currentUser._id,offset : skip*5,limit : 5},function(data){
         complains.initialCount = data.count;
         complains.numberOfPages = Math.floor((data.count-1)/5)+1;
         complains.pagesArray = Array(complains.numberOfPages);

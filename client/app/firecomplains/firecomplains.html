@@ -1,5 +1,8 @@
 <div class="col-md-2"></div>
 <div class="col-md-8" id="formBox">
+  <div class="loadingDiv" ng-show="buttonShow2">
+    <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457419559/loading_jerbkj.gif" alt=""/>
+  </div>
   <br/><br/>
 
   <form enctype="multipart/form-data" name="frm">
@@ -37,9 +40,7 @@
           <div href="#" class="upload_button" ngf-select="uploadFiles($files)" multiple title="upload"
                resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
         </div>
-        <img ng-show="buttonShow2"
-             src="https://res.cloudinary.com/buzzcloud/image/upload/v1457326967/uploading_fqv2cv.gif"
-             style="height: 17px; width: 17px; position: relative; top: -22px; left: 18px; " alt=""/>
+
       </div>
     </div>
 
@@ -47,8 +48,11 @@
             style="position: relative; top: 1px;">Submit
     </button>
   </form>
+  <br/><br/>
+  <div class="file" ng-repeat="file in files" style="position: relative;left: -20%;">
+    <img class="postContentImage img-responsive" ngf-src="file" height="100" width="140" >
+  </div>
 </div>
-<div class="col-md-2"></div>
 
 
 <script type="text/javascript">

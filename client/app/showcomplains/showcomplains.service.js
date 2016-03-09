@@ -3,10 +3,10 @@
  */
 angular.module('prwithyomanApp')
   .factory('ShowComplainsService',['$resource',function($resource){
-    return $resource('/api/complainss/:option/:userId/:offset',{
+    return $resource('/api/complainss/:limit/:offset/:userId',{
         userId : '@userId',
         offset : '@offset',
-        option : '@option'
+        limit : '@limit'
       },
       {
         getComplains : {

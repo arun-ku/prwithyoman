@@ -8,6 +8,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/getComplain/:id', controller.countUserComplains);
+router.get('/getAllComplains/:limit/:skip', controller.getAllComplains);
 router.get('/:limit/:skip/:id', controller.show);
 router.post('/',auth.isAuthenticated(),function(req, res, next){
   req.body.user = {

@@ -1,19 +1,19 @@
 <div class="col-md-12">
-  <br/><br/>
   <h4 ng-if="complains.initialCount==0" style="text-align: center;">No complains by you</h4>
   <div class="postedComplains table-responsive" ng-if="!complains.initialCount == 0">
     <table class="table table-striped table-hover">
       <tr>
-      <th>S. No.</th>
-      <th>Reference Id</th>
-      <th>Category</th>
-      <th>Status</th>
+        <th>S. No.</th>
+        <th>Reference Id</th>
+        <th>Category</th>
+        <th>Status</th>
       </tr>
       <tr ng-repeat="complain in complains.filedComplains">
         <td>{{complains.skip *5 + $index+1}}</td>
         <td><a href="" ui-sref="home.complain({complainId : complain._id})" style="width: 100px; word-break: break-all; display: inline-block; max-height: 40px; overflow: hidden;">{{complain._id}}</a></td>
         <td>{{complain.category}}</td>
         <td>{{complain.status.description}}</td>
+        <td ng-show="complains.currentUser._id != complain.user.userId" style="border: none; background-color: transparent;"><button class="btn btn-success">Assign to me</button></td>
       </tr>
     </table>
   </div>
@@ -43,6 +43,6 @@
 <script type="text/javascript">
   $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
-    $('#cmpone').addClass('active');
+    $('#fr').addClass('active');
   });
 </script>

@@ -11,9 +11,18 @@ angular.module('prwithyomanApp')
       {
         getComplains : {
           method : 'GET'
-        },
-        getCount :{
+        }
+      });
+  }])
+  .factory('ShowAllComplainsService',['$resource',function($resource){
+    return $resource('/api/complainss/getAllComplains/:limit/:offset',{
+        offset : '@offset',
+        limit : '@limit'
+      },
+      {
+        getAllComplains : {
           method : 'GET'
         }
       });
-  }]);
+  }])
+

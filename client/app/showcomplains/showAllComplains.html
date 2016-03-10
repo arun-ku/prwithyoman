@@ -16,9 +16,15 @@
         <td>{{complain.status.description}}</td>
         <td>{{complain.user.name}}</td>
         <td ng-show="complains.currentUser.role == 'admin' || complains.currentUser._id != complain.user.userId ||(complain.status.code == 2 && complain.user.userId == complains.currentUser._id)" style="border: none; background-color: transparent;">
-          <button class="btn btn-success" ng-click="complains.assign(complain._id, $index)" ng-if="complains.currentUser._id != complain.user.userId && complain.status.code == 0">Assign to me</button>
-          <button class="btn btn-danger" ng-click="complains.close(complain._id,complain.user.userId, $index)" ng-if="(complains.currentUser.role == 'admin' && complain.status.code!=3) || (complain.status.code == 1 && complain.assignee.userId == complains.currentUser._id)||(complain.status.code == 2 && complain.user.userId == complains.currentUser._id) "><i class="glyphicon glyphicon-remove-circle"></i>Close</button>
-
+          <button class="btn btn-success" ng-click="complains.assign(complain._id, $index)" ng-if="complains.currentUser.role != 'admin' && (complains.currentUser._id != complain.user.userId && complain.status.code == 0)">Assign to me</button>
+          <button class="btn btn-danger" ng-click="complains.close(complain._id,complain.user.userId, $index)"
+                  ng-if="(complains.currentUser.role == 'admin' && (complain.status.code!=3 && complain.status.code!=2)) ||
+                  (complain.status.code == 1 && complain.assignee.userId == complains.currentUser._id)||
+                  (complain.status.code == 2 && complain.user.userId == complains.currentUser._id) ">
+            <i class="glyphicon glyphicon-remove-circle"></i>
+            <span ng-if="complain.status.code=='1'|| complains.currentUser.role == 'admin'"> Complete</span>
+            <span ng-if="complain.status.code=='2'&& complains.currentUser.role != 'admin'"> Close</span>
+          </button>
         </td>
       </tr>
     </table>

@@ -22,7 +22,7 @@ exports.show = function(req, res) {
       countOfComplains = count;
       return res.json({data : complains, count : countOfComplains});
     });
-  }).sort({fireDate : -1}).limit(req.params.limit).skip(req.params.skip);
+  }).sort({'status.code':1, fireDate : -1}).limit(req.params.limit).skip(req.params.skip);
 };
 
 // Get All Complains
@@ -35,7 +35,7 @@ exports.getAllComplains = function(req, res) {
       countOfComplains = count;
       return res.json({data : complains, count : countOfComplains});
     });
-  }).sort({fireDate : -1}).limit(req.params.limit).skip(req.params.skip);
+  }).sort({'status.code':1, fireDate : -1 }).limit(req.params.limit).skip(req.params.skip);
 };
 
 exports.countUserComplains = function(req, res) {

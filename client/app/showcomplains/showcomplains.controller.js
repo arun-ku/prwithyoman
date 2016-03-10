@@ -77,6 +77,7 @@ angular.module('prwithyomanApp')
 
     complains.assign = function(complainId, i){
       complain.updateComplain({limit : complainId, offset :  '1', description : 'Assigned', message : 'Assigned to'}, function(data){
+        console.log(data.status,'>>>',data.assignee)
         complains.filedComplains[i].status = data.status;
         complains.filedComplains[i].assignee = data.assignee;
       });

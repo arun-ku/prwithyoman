@@ -6,9 +6,12 @@ var ComplainTimeline = require('./complainTimeline.model');
 
 // Get list of complainss
 exports.index = function(req, res) {
-  Complains.find(function (err, complainss) {
+  Complains.findById(req.params.id,function (err, complainss) {
     if(err) { return handleError(res, err); }
-    return res.status(200).json(complainss);
+    ComplainTimeline.find({'complain.complainId' : req.params.id},function(err, timeline){
+      return res.status(200).json({complain : complainss, timeline : timeline});
+    })
+
   });
 };
 
@@ -42,7 +45,9 @@ exports.countUserComplains = function(req, res) {
   Complains.findById( req.params.id, function (err, complains) {
     if(err) { return handleError(res, err); }
     if(!complains) { return res.status(404).send('Not Found'); }
-    return res.json(complains);
+    ComplainTimeline.find({'complain.complainId' : req.params.id},function(err, timeline){
+      return res.status(200).json({complain : complains, timeline : timeline});
+    })
   });
 };
 
@@ -86,7 +91,9 @@ exports.update = function(req, res) {
     timelineObj = {
       logMessage : req.params.message,
       logDate : Date.now(),
-      complainId : req.params.id,
+      complain :{
+        complainId : req.params.id
+      },
       user : newUser
     }
   if(req.params.code == '3'){

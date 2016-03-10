@@ -1,3 +1,39 @@
+<div class="col-md-12" style="background-color: #fff; padding: 10px;">
 <div class="col-md-12">
-This is the complain view.
+  <div class="row" style="padding : 10px;">
+    <div class="col-md-12">
+        <h3>{{complainDetails.mainDetails.title}}</h3>
+        <p>{{complainDetails.mainDetails.content}}</p>
+      <img class="img-responsive" ng-src="{{complainDetails.mainDetails.imageUrl}}" alt="" style="max-width: 80%"/>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6" style="padding: 10px; border-radius: 5px; background-color: #bdc3c7;">
+      <div style="display : inline-block">
+        <img src="{{complainDetails.mainDetails.user.imageUrl}}" alt=""/>
+      </div>
+      <div style="display : inline-block">
+        <label>Filed By :</label>
+        <label>{{complainDetails.mainDetails.user.name}}</label>
+      </div>
+    </div>
+    <div class="col-md-6" ng-show="complainDetails.mainDetails.status.code !='3'">
+      <div style="display : inline-block">
+        <img src="{{complainDetails.mainDetails.assignee.imageUrl}}" alt=""/>
+      </div>
+      <div style="display : inline-block">
+        <label>Assigned to :</label>
+        <label>{{complainDetails.mainDetails.assignee.name}}</label>
+      </div>
+    </div>
+  </div>
 </div>
+</div>
+<div class="col-md-12">
+
+</div>
+
+
+<script>
+
+</script>

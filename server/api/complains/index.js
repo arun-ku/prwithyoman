@@ -6,7 +6,7 @@ var auth = require('../../auth/auth.service');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/:id', controller.index);
 router.get('/getComplain/:id', controller.countUserComplains);
 router.get('/getAllComplains/:limit/:skip', controller.getAllComplains);
 router.get('/:limit/:skip/:id', controller.show);

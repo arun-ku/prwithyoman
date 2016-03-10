@@ -17,6 +17,11 @@ var ComplainsSchema = new Schema({
     userId : String,
     name : String,
     imageUrl : String
+  },
+  assignee : {
+    userId : String,
+    name : String,
+    imageUrl : String
   }
 });
 

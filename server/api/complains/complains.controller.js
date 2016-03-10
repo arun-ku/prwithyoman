@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Complains = require('./complains.model');
+var ComplainTimeline = require('./complainTimeline.model');
 
 // Get list of complainss
 exports.index = function(req, res) {
@@ -50,22 +51,58 @@ exports.countUserComplains = function(req, res) {
 exports.create = function(req, res) {
   Complains.create(req.body, function(err, complains) {
     if(err) { return handleError(res, err); }
+    var timelineObj = {
+      logMessage : req.user.name + ' lodged a new complain',
+      logDate : Date.now(),
+      complain : {
+        complainId : complains._id,
+        category : complains.category
+      },
+      user : req.body.user
+    };
+    ComplainTimeline.create(timelineObj, function(err, obj){
+      if(err) { return handleError(res, err); }
+    });
     return res.status(201).json(complains);
   });
 };
 
 // Updates an existing complains in the DB.
 exports.update = function(req, res) {
-  if(req.body._id) { delete req.body._id; }
-  Complains.findById(req.params.id, function (err, complains) {
-    if (err) { return handleError(res, err); }
-    if(!complains) { return res.status(404).send('Not Found'); }
-    var updated = _.merge(complains, req.body);
-    updated.save(function (err) {
-      if (err) { return handleError(res, err); }
-      return res.status(200).json(complains);
+  var user =  {
+    userId : req.user._id,
+    name : req.user.name,
+    imageUrl : req.user.google.image.url
+    },
+    newUser =  {
+      userId : req.user._id,
+      name : req.user.name,
+      imageUrl : req.user.google.image.url
+    },
+    status = {
+    code : req.params.code,
+    description : req.params.description
+    },
+    timelineObj = {
+      logMessage : req.params.message,
+      logDate : Date.now(),
+      complainId : req.params.id,
+      user : newUser
+    }
+  if(req.params.code == '3'){
+    user = {
+      userId : 'none',
+      name : 'none',
+      imageUrl : 'none'
+    };
+  }
+  console.log(timelineObj);
+  Complains.update({_id: req.params.id}, {$set : {status : status, assignee : user}}, function(err, count) {
+    ComplainTimeline.create(timelineObj, function(err, obj){
+      if(err) { return handleError(res, err); }
     });
   });
+  res.json({status : status, assignee : user});
 };
 
 // Deletes a complains from the DB.

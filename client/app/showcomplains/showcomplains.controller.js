@@ -57,8 +57,33 @@ angular.module('prwithyomanApp')
       });
     });
 
+
+    complains.assign = function(complainId, i){
+      complain.updateComplain({limit : complainId, offset :  '1', description : 'Assigned', message : 'Assigned to'}, function(data){
+        complains.filedComplains[i].status = data.status;
+        complains.filedComplains[i].assignee = data.assignee;
+      });
+    }
+
+    complains.close =function(complainId, userId, i){
+      var offset, description, message;
+      if(complains.currentUser._id == userId){
+         offset = '3';
+        description = 'Closed';
+        message = 'Closed by';
+      }else{
+         offset = '2';
+        description = 'Completed';
+        message = 'Completed by';
+      }
+      complain.updateComplain({limit : complainId, offset :  offset, description : description, message : message}, function(data){
+        complains.filedComplains[i].status = data.status;
+        complains.filedComplains[i].assignee = data.assignee;
+      });
+    }
+
     complains.getPosts = function(skip){
-      complain.getAllComplains({userId : complains.currentUser._id,offset : skip*10,limit : 10},function(data){
+      complain.getAllComplains({offset : skip*10,limit : 10},function(data){
         complains.initialCount = data.count;
         complains.numberOfPages = Math.floor((data.count-1)/10)+1;
         complains.pagesArray = Array(complains.numberOfPages);
@@ -66,7 +91,7 @@ angular.module('prwithyomanApp')
         complains.skip = skip;
         complains.nextSkip = skip+1;
         complains.previousSkip = skip-1;
-        if((complains.nextSkip*5) >= complains.initialCount){
+        if((complains.nextSkip*10) >= complains.initialCount){
           complains.nextButtonShow = false;
         }else{
           complains.nextButtonShow = true;

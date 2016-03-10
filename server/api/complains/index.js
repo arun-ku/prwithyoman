@@ -18,7 +18,7 @@ router.post('/',auth.isAuthenticated(),function(req, res, next){
   }
   next();
 }, controller.create);
-router.put('/:id', controller.update);
+router.put('/getAllComplains/:id/:code/:description/:message', auth.isAuthenticated(), controller.update);
 router.patch('/:id', controller.update);
 router.delete('/:id', controller.destroy);
 

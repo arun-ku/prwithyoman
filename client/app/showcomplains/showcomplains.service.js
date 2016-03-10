@@ -15,13 +15,18 @@ angular.module('prwithyomanApp')
       });
   }])
   .factory('ShowAllComplainsService',['$resource',function($resource){
-    return $resource('/api/complainss/getAllComplains/:limit/:offset',{
+    return $resource('/api/complainss/getAllComplains/:limit/:offset/:description/:message',{
         offset : '@offset',
-        limit : '@limit'
+        limit : '@limit',
+        description : '@description',
+        message : '@message'
       },
       {
         getAllComplains : {
           method : 'GET'
+        },
+        updateComplain : {
+          method : 'PUT'
         }
       });
   }])

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('prwithyomanApp')
-  .controller('ShowcomplainsCtrl',['$scope','ShowComplainsService','Auth' , function ($scope, complain, Auth) {
+  .controller('ShowcomplainsCtrl',['$scope','ShowComplainsService','Auth', 'ShowAllComplainsService', function ($scope, complain, Auth, allComplain) {
     var complains = this;
     complains.skip = 0;
     Auth.getCurrentUser().$promise.then(function(user){
@@ -17,6 +17,23 @@ angular.module('prwithyomanApp')
         complains.previousSkip = -1;
       });
     });
+
+    complains.close =function(complainId, userId, i){
+      var offset, description, message;
+      if(complains.currentUser._id == userId){
+        offset = '3';
+        description = 'Closed';
+        message = 'Closed by';
+      }else{
+        offset = '2';
+        description = 'Completed';
+        message = 'Completed by';
+      }
+      allComplain.updateComplain({limit : complainId, offset :  offset, description : description, message : message}, function(data){
+        complains.filedComplains[i].status = data.status;
+        complains.filedComplains[i].assignee = data.assignee;
+      });
+    }
 
     complains.getPosts = function(skip){
       complain.getComplains({userId : complains.currentUser._id,offset : skip*5,limit : 5},function(data){

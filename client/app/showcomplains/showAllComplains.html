@@ -1,5 +1,5 @@
 <div class="col-md-12">
-  <h4 ng-if="complains.initialCount==0" style="text-align: center;">No complains by you</h4>
+  <h4 ng-if="complains.initialCount==0" style="text-align: center;">No complains..!!!</h4>
   <div class="postedComplains table-responsive" ng-if="!complains.initialCount == 0" style="min-height: 700px;">
     <table class="table table-striped table-hover">
       <tr>
@@ -18,7 +18,7 @@
         <td ng-show="complains.currentUser.role == 'admin' || complains.currentUser._id != complain.user.userId ||(complain.status.code == 2 && complain.user.userId == complains.currentUser._id)" style="border: none; background-color: transparent;">
           <button class="btn btn-success" ng-click="complains.assign(complain._id, $index)" ng-if="complains.currentUser._id != complain.user.userId && complain.status.code == 0">Assign to me</button>
           <button class="btn btn-danger" ng-click="complains.close(complain._id,complain.user.userId, $index)" ng-if="(complains.currentUser.role == 'admin' && complain.status.code!=3) || (complain.status.code == 1 && complain.assignee.userId == complains.currentUser._id)||(complain.status.code == 2 && complain.user.userId == complains.currentUser._id) "><i class="glyphicon glyphicon-remove-circle"></i>Close</button>
-        
+
         </td>
       </tr>
     </table>

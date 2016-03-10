@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6" style="padding: 10px; border-radius: 5px; background-color: #bdc3c7;">
+    <div class="col-md-5" style="padding: 10px; border-radius: 5px; background-color: #bdc3c7; margin: 5px;">
       <div style="display : inline-block">
         <img src="{{complainDetails.mainDetails.user.imageUrl}}" alt=""/>
       </div>
@@ -17,7 +17,7 @@
         <label>{{complainDetails.mainDetails.user.name}}</label>
       </div>
     </div>
-    <div class="col-md-6" ng-show="complainDetails.mainDetails.status.code !='3'">
+    <div class="col-md-5 col-md-offset-1" style="padding: 10px; border-radius: 5px; background-color: #bdc3c7; margin: 5px;" ng-show="complainDetails.mainDetails.status.code !='3'&&complainDetails.mainDetails.status.code !='0'">
       <div style="display : inline-block">
         <img src="{{complainDetails.mainDetails.assignee.imageUrl}}" alt=""/>
       </div>
@@ -30,7 +30,35 @@
 </div>
 </div>
 <div class="col-md-12">
+  <div class="col-md-12">
+    <header class="page-header">
+      <h1>Process</h1>
+    </header>
 
+    <ul class="timeline">
+      <li><div class="tldate">Start</div></li>
+
+      <li ng-repeat="log in complainDetails.timeline" ng-class-odd="'timeline-inverted'">
+        <div class="tl-circ"></div>
+        <div class="timeline-panel">
+          <div class="tl-heading">
+            <h4>{{log.logMessage}} <span ng-if="$index != 0">{{log.user.name}}</span></h4>
+            <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i> {{log.logDate}}</small></p>
+          </div>
+          <div class="tl-body">
+            <p><img src="{{log.user.imageUrl}}" alt=""/></p>
+            <p>{{log.user.name}}</p>
+            <p ng-if="$index == 0"><h4 ng-if="$index == 0">{{complainDetails.mainDetails.title}}</h4></p>
+            <p ng-if="$index == 0"><img src="{{complainDetails.mainDetails.imageUrl}}" alt=""/></p>
+          </div>
+        </div>
+      </li>
+
+      <li><div class="tldate">End</div></li>
+
+
+    </ul>
+  </div>
 </div>
 
 

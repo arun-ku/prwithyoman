@@ -1,6 +1,7 @@
 .navbar{
   background-color: #3498db;
   font-weight: bolder;
+  z-index: 999999;
 }
 
 .navbar-default .navbar-nav > li > a{

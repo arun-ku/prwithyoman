@@ -6,6 +6,6 @@ angular.module('prwithyomanApp')
       .state('home.settings',{
         url : '/settings',
         templateUrl : 'app/homesettings/homesettings.html',
-        controller: 'HomesettingsCtrl'
+        controller: 'HomesettingsCtrl as settings'
       })
   })

@@ -1,8 +1,44 @@
-<div style="background-color: #fff; padding: 20px; text-align: center; min-height: 700px;">
-  <h3 id="setti"><i class="glyphicon glyphicon-cog" id="sett"></i>  Settings</h3>
+<div class="clearfix" style="background-color: #fff; padding: 20px; min-height: 400px;">
+  <h3 id="setti" style="text-align: center;"><i class="glyphicon glyphicon-cog" id="sett"></i>  Settings</h3>
+  <div class="loadingDiv" ng-show="settings.loadingShow">
+    <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457419559/loading_jerbkj.gif" alt=""/>
+  </div>
+  <br/><br/>
+  <form action="" name="frm">
+    <div class="col-md-12 top-margin-10">
+      <div class="col-md-4"><label for="name">Name : </label></div>
+      <div class="col-md-8"><input id="name" type="text" ng-model="settings.userName" class="plain-input-tag" ng-keyup="settings.textChanged()" required/></div>
+    </div>
+    <br/>
+    <div class="col-md-12 top-margin-10">
+      <div class="col-md-4"><label for="position">Position : </label></div>
+      <div class="col-md-8"><input id="position" type="text" ng-model="settings.userPosition" class="plain-input-tag" ng-keyup="settings.textChanged()" required/></div>
+    </div>
+    <br/>
+    <div class="col-md-12 top-margin-10">
+      <div class="col-md-4"><label for="uploadBox">Change Image : </label></div>
+      <br/>
+      <div class="form_controls" style="display: inline-block; top: -20px; left: 20px;" id="uploadBox" data-toggle="tooltip"
+                                              title="Change your profile picture">
+      <div class="upload_button_holder">
+        <div href="#" class="upload_button" ngf-select="settings.uploadFiles($files)" multiple title="upload"
+             resetOnClick="true"><i class="glyphicon glyphicon-camera"></i></div>
+      </div>
+    </div>
+    </div>
+    <br/>
+    <div class="col-md-12 top-margin-10">
+      <div class="file" ng-repeat="file in settings.files">
+        <img class="img-responsive" ngf-src="file" style="max-height: 150px; max-width: 150px;">
+      </div>
+    </div>
+    <br/>
 
+  </form>
+  <div class="col-md-12 top-margin-10">
+    <button class="btn btn-info pull-right" ng-show="settings.hasAnythingChanged && !settings.frm.$invalid" ng-click="settings.saveDetails()">Save</button>
+  </div>
 </div>
-
 <script type="text/javascript">
   $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();

@@ -4,6 +4,7 @@ var User = require('./user.model');
 var passport = require('passport');
 var config = require('../../config/environment');
 var jwt = require('jsonwebtoken');
+var _ = require('lodash');
 
 var validationError = function(res, err) {
   return res.status(422).json(err);
@@ -91,6 +92,12 @@ exports.me = function(req, res, next) {
     if (!user) return res.status(401).send('Unauthorized');
     res.json(user);
   });
+};
+
+exports.update = function(req, res) {
+  User.update({_id : req.body._id},{$set : {name : req.body.name, position : req.body.position,'google.image.url' : req.body.google.image.url}},function(err, count){
+    res.send(count);
+  })
 };
 
 /**

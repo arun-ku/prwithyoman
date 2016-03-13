@@ -10,7 +10,8 @@ var CommentSchema = new Schema({
     imageUrl : String
   },
   content : String,
-  time : String
+  time : String,
+  postId : String
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);

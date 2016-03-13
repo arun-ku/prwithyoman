@@ -1,35 +1,37 @@
-<div infinite-scroll='posts.nextPageCategory()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.5' infinite-scroll-disabled="isData()">
-  <div ng-repeat="post in posts.items" class="onePost">
-    <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']"><div class="tri-1"></div><span>&nbsp &nbsp{{post.category}}</span></div>
-    <div class="postHeader">
-      <img ng-src="{{post.user.imageUrl}}" class="postHeaderImage" alt=""/>
-      <div class="postHeaderDiv">
-        <span class="postHeaderSpan">{{post.user.name}} created a new buzz</span><br/>
-        <span class="postHeaderDateSpan" am-time-ago="post.buzzDate"></span>
-      </div>
-    </div>
-    <div class="postContentDiv">
-      <div >
-        <!--<span class="postContentSpan" ng-bind-html="post.content"></span>-->
-        <div hm-read-more
-             hm-text="{{ post.content | linky}}"
-             hm-limit="500"
-             hm-more-text="read more"
-             hm-less-text="read less"
-             hm-dots-class="dots"
-             hm-link-class="links">
+<div class="col-md-10 col-md-offset-2" style="padding: 0px;">
+  <div infinite-scroll='posts.nextPageCategory()' infinite-scroll-disabled='posts.busy' infinite-scroll-distance='0.5' infinite-scroll-disabled="isData()">
+    <div ng-repeat="post in posts.items" class="onePost">
+      <div ng-class="{true : 'ribbon-wrapper1',false : 'ribbon-wrapper2'}[post.category == 'Activity']"><div class="tri-1"></div><span>&nbsp &nbsp{{post.category}}</span></div>
+      <div class="postHeader">
+        <img ng-src="{{post.user.imageUrl}}" class="postHeaderImage" alt=""/>
+        <div class="postHeaderDiv">
+          <span class="postHeaderSpan">{{post.user.name}} created a new buzz</span><br/>
+          <span class="postHeaderDateSpan" am-time-ago="post.buzzDate"></span>
         </div>
-      </div><br/><br/>
-      <img class="postContentImage" ng-src="{{post.imageUrl}}" alt=""/>
+      </div>
+      <div class="postContentDiv">
+        <div >
+          <!--<span class="postContentSpan" ng-bind-html="post.content"></span>-->
+          <div hm-read-more
+               hm-text="{{ post.content}}"
+               hm-limit="500"
+               hm-more-text="read more"
+               hm-less-text="read less"
+               hm-dots-class="dots"
+               hm-link-class="links">
+          </div>
+        </div><br/><br/>
+        <img class="postContentImage" ng-src="{{post.imageUrl}}" alt=""/>
+      </div>
+
     </div>
 
-  </div>
 
-
-  <div ng-show="!posts.done">
-    <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457327149/Loading1_egy19r.gif" style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
-  </div>
-  <h1 class="blurred" ng-show="posts.done">End Of content</h1>
+    <div ng-show="!posts.done">
+      <img src="https://res.cloudinary.com/buzzcloud/image/upload/v1457327149/Loading1_egy19r.gif" style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
+    </div>
+    <h1 class="blurred" ng-show="posts.done">End Of content</h1>
+</div>
 
   <script type="text/javascript">
     $(document).ready(function () {

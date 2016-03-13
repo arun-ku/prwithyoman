@@ -10,6 +10,7 @@ angular.module('prwithyomanApp')
     $scope.buttonShow = true;
     $scope.buttonShow2 = false;
     $scope.commentShow = false;
+    $scope.commentButtonDisabled = true;
     $scope.post.category = 'Activity';
     $scope.opinionButtonDisabled = false;
     Auth.getCurrentUser().$promise.then(function(user){
@@ -22,6 +23,40 @@ angular.module('prwithyomanApp')
       $scope.files = files;
       $scope.buttonShow = false;
     };
+
+    $scope.postComment = function(postId, scope){
+      scope.commentButtonDisabled = true;
+      var urlPattern = /(http:\/\/|https:\/\/)?(www\.)?[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      var urlPattern2 = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+      scope.comment.content = scope.comment.content.replace(/\n/g, "<br/>");
+
+      if(scope.comment.content.indexOf('https://') === -1 || scope.comment.content.indexOf('http://') === -1) {
+        scope.comment.content = scope.comment.content.replace(urlPattern, '<a target="_blank' + '" href="'+'http://'+'$&">$&</a>');
+      } else {
+        scope.comment.content = scope.comment.content.replace(urlPattern, '<a target="_blank' + '" href="$&">$&</a>');
+      }
+      $http.post('/api/comments',{postId : postId, content : scope.comment.content}).then(function(res){
+        scope.commentsForPost.unshift(res.data);
+        scope.post.commentCount +=1;
+        scope.comment.content = '';
+      });
+    };
+
+    $scope.commentButtonEnabler = function(){
+      if(this.comment.content == ''){
+        this.commentButtonDisabled = true;
+      }else{
+        this.commentButtonDisabled = false;
+      }
+    };
+
+    $scope.commentShowFunction =function(postId,scope){
+      $http.get('/api/comments/'+postId).then(function(data){
+        scope.commentsForPost = data.data;
+      });
+      scope.commentShow = true;
+
+    }
 
     $scope.resetForm = function(){
       $scope.post.category = 'Activity';

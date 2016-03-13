@@ -2,6 +2,7 @@
 
 var _ = require('lodash');
 var Comment = require('./comment.model');
+var Post = require('../post/post.model');
 
 // Get list of comments
 exports.index = function(req, res) {
@@ -13,17 +14,18 @@ exports.index = function(req, res) {
 
 // Get a single comment
 exports.show = function(req, res) {
-  Comment.findById(req.params.id, function (err, comment) {
+  Comment.find({postId : req.params.id}, function (err, comment) {
     if(err) { return handleError(res, err); }
     if(!comment) { return res.status(404).send('Not Found'); }
     return res.json(comment);
-  });
+  }).sort({time : -1});
 };
 
 // Creates a new comment in the DB.
 exports.create = function(req, res) {
   Comment.create(req.body, function(err, comment) {
     if(err) { return handleError(res, err); }
+    Post.update({_id : req.body.postId},{$inc : {commentCount : 1}},function(a,b){});
     return res.status(201).json(comment);
   });
 };

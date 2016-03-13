@@ -9,7 +9,7 @@ var router = express.Router();
 
 router
   .get('/', passport.authenticate('google', {
-    failureRedirect: '/',
+    failureRedirect: '/login',
     hd : config.google.hd,
     scope: [
       'https://www.googleapis.com/auth/userinfo.profile',
@@ -19,7 +19,7 @@ router
   }))
 
   .get('/callback', passport.authenticate('google', {
-    failureRedirect: '/',
+    failureRedirect: '/login',
     session: false
   }), auth.setTokenCookie);
 

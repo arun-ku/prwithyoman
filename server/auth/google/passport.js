@@ -10,26 +10,30 @@ exports.setup = function (User, config) {
       callbackURL: config.google.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-      User.findOne({
-        'google.id': profile.id
-      }, function(err, user) {
-        if (!user) {
-          user = new User({
-            name: profile.displayName,
-            email: profile.emails[0].value,
-            role: 'user',
-            username: profile.username,
-            provider: 'google',
-            google: profile._json
-          });
-          user.save(function(err) {
-            if (err) return done(err);
-            done(err, user);
-          });
-        } else {
-          return done(err, user);
-        }
-      });
+      if(profile._json.domain == 'tothenew.com') {
+        User.findOne({
+          'google.id': profile.id
+        }, function (err, user) {
+          if (!user) {
+            user = new User({
+              name: profile.displayName,
+              email: profile.emails[0].value,
+              role: 'user',
+              username: profile.username,
+              provider: 'google',
+              google: profile._json
+            });
+            user.save(function (err) {
+              if (err) return done(err);
+              done(err, user);
+            });
+          } else {
+            return done(err, user);
+          }
+        });
+      }else{
+        return done(null, {code : '777'});
+      }
     }
   ));
 };

@@ -17,7 +17,7 @@ angular.module('prwithyomanApp', [
       .set("cloud_name", "buzzcloud")
       .set("upload_preset", "xb8f9g0w");
     $urlRouterProvider
-      .otherwise('/');
+      .otherwise('/login');
 
     $locationProvider.html5Mode(true);
     $httpProvider.interceptors.push('authInterceptor');
@@ -38,7 +38,7 @@ angular.module('prwithyomanApp', [
       // Intercept 401s and redirect you to login
       responseError: function(response) {
         if(response.status === 401) {
-          $location.path('/');
+          $location.path('/login');
           // remove any stale tokens
           $cookieStore.remove('token');
           return $q.reject(response);
@@ -57,7 +57,7 @@ angular.module('prwithyomanApp', [
       Auth.isLoggedInAsync(function(loggedIn) {
         if (next.authenticate && !loggedIn) {
           event.preventDefault();
-          $location.path('/');
+          $location.path('/login');
         }
       });
     });

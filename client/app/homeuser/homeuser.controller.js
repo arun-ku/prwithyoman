@@ -3,7 +3,7 @@
 angular.module('prwithyomanApp')
   .controller('HomeuserCtrl',['$scope', 'Auth', '$http', 'Reddit', 'PostService', 'Upload', 'cloudinary', function ($scope, Auth, $http, Reddit, PostService, $upload, cloudinary) {
     //Socket.connect();
-    var socket = io('http://localhost:9000', {
+    var socket = io({
       transports: ["websocket"]
     });
     $scope.posts = new Reddit();

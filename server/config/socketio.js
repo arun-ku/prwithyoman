@@ -49,6 +49,7 @@ module.exports = function (socketio) {
             process.env.DOMAIN;
 
     socket.connectedAt = new Date();
+    socket.join('chatroom');
 
     // Call onDisconnect.
     socket.on('disconnect', function () {
@@ -61,7 +62,8 @@ module.exports = function (socketio) {
     console.info('[%s] CONNECTED', socket.address);
 
     socket.on('send-message',function(data){
-      socket.emit('new-message',data);
+      console.log(socket)
+      socket.to('chatroom').emit('new-message',data);
     })
   });
 };

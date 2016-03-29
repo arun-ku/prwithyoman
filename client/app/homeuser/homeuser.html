@@ -162,7 +162,7 @@
       <ul class="chatbox-messages">
         <li ng-repeat="message in messages"><strong>{{message.user.name}} : </strong> {{message.text}} <hr/></li>
       </ul>
-      <form ng-submit="sendMessage()">
+      <form ng-submit="sendMessage($event)">
         <input type="text" class="chatbox-input" ng-model="chatboxInput"/>
       </form>
     </div>

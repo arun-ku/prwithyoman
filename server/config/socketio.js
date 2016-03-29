@@ -18,6 +18,7 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/chat/chat.socket').register(socket);
   require('../api/comment/comment.socket').register(socket);
   require('../api/complains/complains.socket').register(socket);
   require('../api/post/post.socket').register(socket);
@@ -25,6 +26,8 @@ function onConnect(socket) {
 }
 
 module.exports = function (socketio) {
+
+  console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>", socketio, "\n\n\n\n\n");
   // socket.io (v1.x.x) is powered by debug.
   // In order to see all the debug output, set DEBUG (in server/config/local.env.js) to including the desired scope.
   //
@@ -56,5 +59,9 @@ module.exports = function (socketio) {
     // Call onConnect.
     onConnect(socket);
     console.info('[%s] CONNECTED', socket.address);
+
+    socket.on('send-message',function(data){
+      socket.emit('new-message',data);
+    })
   });
 };

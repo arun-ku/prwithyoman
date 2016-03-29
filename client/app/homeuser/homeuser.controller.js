@@ -2,6 +2,10 @@
 
 angular.module('prwithyomanApp')
   .controller('HomeuserCtrl',['$scope', 'Auth', '$http', 'Reddit', 'PostService', 'Upload', 'cloudinary', function ($scope, Auth, $http, Reddit, PostService, $upload, cloudinary) {
+    //Socket.connect();
+    var socket = io('http://localhost:9000', {
+      transports: ["websocket"]
+    });
     $scope.posts = new Reddit();
     $scope.post = {};
     $scope.canvasShow = false;
@@ -13,10 +17,13 @@ angular.module('prwithyomanApp')
     $scope.commentButtonDisabled = true;
     $scope.post.category = 'Activity';
     $scope.opinionButtonDisabled = false;
+    $scope.messages = [];
     Auth.getCurrentUser().$promise.then(function(user){
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;
     });
+
+    console.log(socket);
 
 
     $scope.uploadFiles = function(files){
@@ -126,8 +133,28 @@ angular.module('prwithyomanApp')
       var date = new Date(timestamp);
       return date;
     }*/
+    $scope.sendMessage = function(){
+      if($scope.chatboxInput!=''){
+        var sendObj = {
+          text : $scope.chatboxInput,
+          user : {
+            id : Auth.getCurrentUser()._id,
+            name : Auth.getCurrentUser().name,
+            imageUrl : Auth.getCurrentUser().google.image.url
+          }
+        }
+        socket.emit('send-message',sendObj);
+        $scope.chatboxInput = '';
+      }
+    };
+
+    socket.on('new-message',function(message){
+      $scope.messages.push(message);
+      $scope.$digest();
+    });
 
     $scope.submitPost = function(){
+      socket.emit('data',{abc : 123456});
       $scope.frm.$setPristine();
       $scope.buttonShow = true;
       $scope.postShow = false;

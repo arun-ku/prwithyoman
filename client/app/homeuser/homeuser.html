@@ -141,7 +141,7 @@
 
           </form>
           <div class="commentDiv" ng-repeat="comment in commentsForPost">
-            <div class="commentImageDiv"><img src="{{comment.user.imageUrl}}" alt=""/></div>
+            <div class="commentImageDiv"><img ng-src="{{comment.user.imageUrl}}" alt=""/></div>
             <div class="commentContentDiv"><b>{{comment.user.name}} : </b> <span ng-bind-html="comment.content"></span>
             </div>
           </div>
@@ -155,6 +155,16 @@
              style="position: relative; left: 45%; height: 50px; width:50px;" alt=""/>
       </div>
       <h1 class="blurred"  ng-show="posts.done">End Of content</h1>
+    </div>
+
+    <div class="chatbox">
+      <div class="chatbox-title">Chat Room <span class="pull-right">.....</span></div>
+      <ul class="chatbox-messages">
+        <li ng-repeat="message in messages"><strong>{{message.user.name}} : </strong> {{message.text}} <hr/></li>
+      </ul>
+      <form ng-submit="sendMessage()">
+        <input type="text" class="chatbox-input" ng-model="chatboxInput"/>
+      </form>
     </div>
 
 

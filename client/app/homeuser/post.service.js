@@ -71,4 +71,7 @@ angular.module('prwithyomanApp')
           method : 'PUT'
         }
       });
+  }])
+  .factory('Socket',['socketFactory', function(socketFactory){
+    return socketFactory();
   }]);

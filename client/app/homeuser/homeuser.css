@@ -230,4 +230,33 @@ pre{
   left: 35%;
 }
 
+/*chatbox starts*/
 
+.chatbox{
+  position: fixed;
+  bottom: 0px;
+  right: 10px;
+  border: 1px solid #A3A3A3;
+  width: 30%;
+  background-color: #fff;
+}
+
+.chatbox-title{
+  background-color: #3498db;
+  color: #ffffff;
+  font-weight: bolder;
+  padding: 8px 14px;
+}
+.chatbox-input{
+  padding: 5px 12px;
+  width: 100%;
+  outline: none;
+  border-width: 1px 0px;
+}
+.chatbox-messages{
+  list-style-type: none;
+  padding: 10px;
+  min-height: 200px;
+}
+
+/*chatbox ends*/

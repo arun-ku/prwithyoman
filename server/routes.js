@@ -19,6 +19,7 @@ var up = multer({storage: multer.diskStorage({
 module.exports = function(app) {
 
   // Insert routes below
+  app.use('/api/chats', require('./api/chat'));
   app.use('/api/comments', require('./api/comment'));
   app.use('/api/complainss', require('./api/complains'));
   app.use('/api/posts' ,up.single("file"), require('./api/post'));

@@ -10,7 +10,8 @@ angular.module('prwithyomanApp', [
   'hm.readmore',
   'infinite-scroll',
   'ngFileUpload',
-  'cloudinary'
+  'cloudinary',
+  'ngCookies'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider, cloudinaryProvider) {
     cloudinaryProvider

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('prwithyomanApp')
-  .controller('HomeuserCtrl',['$scope', 'Auth', '$http', 'Reddit', 'PostService', 'Upload', 'cloudinary','Socket', function ($scope, Auth, $http, Reddit, PostService, $upload, cloudinary,Socket) {
+  .controller('HomeuserCtrl',['$scope', 'Auth', '$http', 'Reddit', 'PostService', 'Upload', 'cloudinary','Socket','$cookies', function ($scope, Auth, $http, Reddit, PostService, $upload, cloudinary,Socket, $cookies) {
     //Socket.connect();
     /*var socket = io({
       transports: ["websocket"]
@@ -17,10 +17,34 @@ angular.module('prwithyomanApp')
     $scope.commentButtonDisabled = true;
     $scope.post.category = 'Activity';
     $scope.opinionButtonDisabled = false;
-    $scope.messages = [];
+    $scope.chatboxes = [];
+    Array.prototype.conatins = function(obj){
+      var flag = 0;
+      this.forEach(function(user){
+        if(user._id == obj.user._id){
+          flag = 1;
+        }
+      })
+      if(flag==1){return true;}
+      return false;
+    }
+
+    Array.prototype.findIndexOf = function(obj){
+      var flag = 0;
+      this.forEach(function(user,i){
+        if(user._id == obj.user._id){
+          flag = i;
+        }
+      })
+      return flag;
+    }
+
+
     Auth.getCurrentUser().$promise.then(function(user){
+      $scope.currentUserId = user._id;
       $scope.userImageUrl = user.google.image.url;
       $scope.userName = user.name;
+      $cookies.put('userId',user._id);
     });
 
 
@@ -132,25 +156,42 @@ angular.module('prwithyomanApp')
       var date = new Date(timestamp);
       return date;
     }*/
-    $scope.sendMessage = function(e){
+    $scope.addChatBox = function(user){
+      user.messages = [];
+      $scope.chatboxes.unshift(user);
+    }
+    $scope.sendMessage = function(toUser){
       if($scope.chatboxInput!=''){
         var sendObj = {
-          text : $scope.chatboxInput,
-          user : {
-            id : Auth.getCurrentUser()._id,
-            name : Auth.getCurrentUser().name,
-            imageUrl : Auth.getCurrentUser().google.image.url
-          }
+          text : this.chatboxInput,
+          user : Auth.getCurrentUser(),
+          toUser : toUser._id
         }
+        console.log()
         Socket.emit('send-message',sendObj);
-        $scope.messages.push(sendObj);
-        $scope.chatboxInput = '';
+        toUser.messages.push(sendObj);
+        this.chatboxInput = '';
       }
     };
 
+
+
     Socket.on('new-message',function(message){
-      $scope.messages.push(message);
+      if($scope.chatboxes.conatins(message)) {
+        $scope.chatboxes[$scope.chatboxes.findIndexOf(message)].messages.push(message);
+      }else{
+        $scope.addChatBox(message.user);
+        $scope.chatboxes[$scope.chatboxes.findIndexOf(message)].messages.push(message);
+      }
       $scope.$digest();
+    });
+
+
+    Socket.emit('request-user',{});
+
+    Socket.on('users',function(data){
+      $scope.users = data.users;
+      console.log(data.users);
     });
 
     $scope.submitPost = function(){

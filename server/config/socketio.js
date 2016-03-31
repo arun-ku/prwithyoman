@@ -5,10 +5,20 @@
 'use strict';
 
 var config = require('./environment');
+var Auth = require('../auth/auth.service');
+var expressJwt = require('express-jwt');
+var cookieParser = require('cookie-parser');
+var validateJwt = expressJwt({ secret: config.secrets.session });
+var users = [];
+var sockets = {};
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
 }
+/*
+
+(function(Auth.isAuthenticated(),))();
+*/
 
 // When the user connects.. perform this
 function onConnect(socket) {
@@ -47,10 +57,36 @@ module.exports = function (socketio) {
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;
+console.log('socket========================',socket.id);
+    console.log(socket.handshake.headers.cookie);
+
+    //var cookieObj = cookieParser.JSONCookie(socket.handshake.headers.cookie);
+    //console.log(cookieObj);
+    var reqObj = {
+      headers: socket.handshake.headers
+    };
+
+
+    cookieParser()(reqObj, {}, function (req, res, next) {
+      console.log("++++++", reqObj);
+
+      reqObj.headers.authorization = "Bearer " + JSON.parse(reqObj.cookies.token);
+      Auth.isAuthenticated()(reqObj, {}, function() {
+        console.log(reqObj.user);
+        if(!sockets.hasOwnProperty(reqObj.user._id)){
+          users.push(reqObj.user);
+        }
+        sockets[reqObj.user._id] = socket;
+
+      });
+    });
+
 
     socket.connectedAt = new Date();
+    console.log('################################',socket.id);
+    /*
     socket.join('chatroom');
-
+*/
     // Call onDisconnect.
     socket.on('disconnect', function () {
       onDisconnect(socket);
@@ -61,9 +97,13 @@ module.exports = function (socketio) {
     onConnect(socket);
     console.info('[%s] CONNECTED', socket.address);
 
+    socket.on('request-user',function(){
+      socketio.emit('users',{users : users})
+    })
+
     socket.on('send-message',function(data){
-      console.log(socket)
-      socket.to('chatroom').emit('new-message',data);
+
+      sockets[data.toUser].emit('new-message',data);
     })
   });
 };

@@ -1,4 +1,4 @@
-<div class="col-md-10 col-md-offset-2" style="padding: 0px;">
+<div class="col-md-10 col-md-offset-1" style="padding: 0px;">
 
   <div nv-file-drop="" uploader="uploader">
     <div class="postDiv">
@@ -157,16 +157,22 @@
       <h1 class="blurred"  ng-show="posts.done">End Of content</h1>
     </div>
 
-    <div class="chatbox">
-      <div class="chatbox-title">Chat Room <span class="pull-right">.....</span></div>
-      <ul class="chatbox-messages">
-        <li ng-repeat="message in messages"><strong>{{message.user.name}} : </strong> {{message.text}} <hr/></li>
-      </ul>
-      <form ng-submit="sendMessage($event)">
-        <input type="text" class="chatbox-input" ng-model="chatboxInput"/>
-      </form>
+    <div class="chatboxes clearfix">
+      <div class="chatbox" ng-repeat='chatbox in chatboxes track by chatbox._id'>
+        <div class="chatbox-title">{{chatbox.name }}<span class="pull-right">.....</span></div>
+        <ul class="chatbox-messages">
+          <li ng-repeat="message in chatbox.messages"><strong>{{message.user.name}} : </strong> {{message.text}} <hr/></li>
+        </ul>
+        <form ng-submit="sendMessage(chatbox)">
+          <input type="text" class="chatbox-input" ng-model="chatboxInput"/>
+        </form>
+      </div>
     </div>
-
+    <div class="onlineUsers">
+        <ul class="users">
+          <li ng-repeat="user in users" ng-click="addChatBox(user)" ng-if="user._id!=currentUserId">{{user.name}}</li>
+        </ul>
+    </div>
 
     <script type="text/javascript">
       $(document).ready(function () {
@@ -175,5 +181,4 @@
       });
     </script>
   </div>
-
 </div>

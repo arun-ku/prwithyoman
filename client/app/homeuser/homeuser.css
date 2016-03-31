@@ -231,14 +231,18 @@ pre{
 }
 
 /*chatbox starts*/
-
-.chatbox{
+.chatboxes{
   position: fixed;
   bottom: 0px;
-  right: 10px;
+  margin-right: 200px;
+}
+
+.chatbox{
   border: 1px solid #A3A3A3;
-  width: 30%;
+  width: 200px;
   background-color: #fff;
+  float: right;
+  margin-right: 5px;
 }
 
 .chatbox-title{
@@ -260,5 +264,25 @@ pre{
   max-height: 300px;
   text-after-overflow: auto;
 }
+.onlineUsers{
+  background-color: #fff;
+  color: #00b3ee;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  padding-top: 100px;
+}
+.users{
+  list-style-type: none;
+}
 
+.users li{
+  padding: 8px 42px;
+
+}
+.users li:hover{
+  background-color: rgba(241, 196, 15,.5);
+  cursor: pointer;
+}
 /*chatbox ends*/

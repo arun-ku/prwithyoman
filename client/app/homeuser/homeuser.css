@@ -259,9 +259,10 @@ pre{
 }
 .chatbox-messages{
   list-style-type: none;
+}
+.messages{
   padding: 10px;
-  min-height: 200px;
-  max-height: 300px;
+  height : 220px;
   overflow: auto;
 }
 .onlineUsers{

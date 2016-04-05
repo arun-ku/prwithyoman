@@ -171,6 +171,7 @@ angular.module('prwithyomanApp')
         Socket.emit('send-message',sendObj);
         toUser.messages.push(sendObj);
         this.chatboxInput = '';
+        $(".messages").animate({ scrollTop: $(".chatbox-messages").height() }, 1000);
       }
     };
 
@@ -184,6 +185,7 @@ angular.module('prwithyomanApp')
         $scope.chatboxes[$scope.chatboxes.findIndexOf(message)].messages.push(message);
       }
       $scope.$digest();
+      $(".messages").animate({ scrollTop: $(".chatbox-messages").height() }, 1000);
     });
 
 

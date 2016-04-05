@@ -160,9 +160,11 @@
     <div class="chatboxes clearfix">
       <div class="chatbox" ng-repeat='chatbox in chatboxes track by chatbox._id'>
         <div class="chatbox-title">{{chatbox.name }}<span class="pull-right">.....</span></div>
-        <ul class="chatbox-messages">
-          <li ng-repeat="message in chatbox.messages"><strong>{{message.user.name}} : </strong> {{message.text}} <hr/></li>
-        </ul>
+        <div class="messages">
+          <ul class="chatbox-messages">
+            <li ng-repeat="message in chatbox.messages"><strong>{{message.user.name}} : </strong> {{message.text}} <hr/></li>
+          </ul>
+        </div>
         <form ng-submit="sendMessage(chatbox)">
           <input type="text" class="chatbox-input" ng-model="chatboxInput"/>
         </form>
@@ -179,6 +181,7 @@
         $('[data-toggle="tooltip"]').tooltip();
         $('#on').addClass('active');
       });
+
     </script>
   </div>
 </div>

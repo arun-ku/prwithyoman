@@ -39,7 +39,7 @@ var all = {
     clientID:     process.env.GOOGLE_ID || '559019650609-k558h5722d87lgojook537cihvl0195t.apps.googleusercontent.com',
     clientSecret: process.env.GOOGLE_SECRET || 'j1iWnFy2HFdkjLbX9dX8CQ4Z',
     callbackURL:  (process.env.DOMAIN || '') + '/auth/google/callback',
-    hd : "tothenew.com"
+    // hd : "tothenew.com"
   }
 };
 

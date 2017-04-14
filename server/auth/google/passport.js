@@ -10,7 +10,7 @@ exports.setup = function (User, config) {
       callbackURL: config.google.callbackURL
     },
     function(accessToken, refreshToken, profile, done) {
-      if(profile._json.domain == 'tothenew.com') {
+      // if(profile._json.domain == 'tothenew.com') {
         User.findOne({
           'google.id': profile.id
         }, function (err, user) {
@@ -31,9 +31,9 @@ exports.setup = function (User, config) {
             return done(err, user);
           }
         });
-      }else{
-        return done(null, {code : '777'});
-      }
+      // }else{
+      //   return done(null, {code : '777'});
+      // }
     }
   ));
 };
